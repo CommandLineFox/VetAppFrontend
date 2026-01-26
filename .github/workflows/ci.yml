@@ -47,7 +47,7 @@ jobs:
       - name: Start Backend API
         run: |
           cd backend
-          mvn spring-boot:run &
+          mvn spring-boot:run -DskipTests &
 
       - name: Run Cypress
         uses: cypress-io/github-action@v6
@@ -55,4 +55,4 @@ jobs:
           working-directory: frontend
           start: npm start
           wait-on: 'http://localhost:8080/api/health, http://localhost:3000'
-          wait-on-timeout: 120
+          wait-on-timeout: 180
