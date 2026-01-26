@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_URL=http://localhost:8080/api
+    container_name: vet_frontend_app
+    ports:
+      - "3000:80"
+    restart: always
