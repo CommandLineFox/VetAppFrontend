@@ -40,7 +40,7 @@ jobs:
       - name: Start backend and database
         run: |
           cd backend
-          docker-compose up -d --build
+          docker compose up -d --build
 
       - name: Run Cypress
         uses: cypress-io/github-action@v6
