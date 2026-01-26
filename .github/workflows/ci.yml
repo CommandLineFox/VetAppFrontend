@@ -54,5 +54,5 @@ jobs:
         with:
           working-directory: frontend
           start: npm start
-          wait-on: 'http://localhost:8080/api/auth/login, http://localhost:3000'
+          wait-on: 'http://localhost:8080/api/health, http://localhost:3000'
           wait-on-timeout: 180
