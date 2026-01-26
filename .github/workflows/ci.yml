@@ -37,23 +37,37 @@ jobs:
       - name: Checkout Backend
         run: git clone https://github.com/CommandLineFox/VetAppBackend.git backend
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Cypress
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
+
       - name: Start backend and database
         run: |
           cd backend
-          docker compose up -d --build
+          docker compose build --build-arg BUILDKIT_INLINE_CACHE=1
+          docker compose up -d
 
-      - name: Wait for Backend & Database Seed
+      - name: Start Frontend (Nginx verzija)
+        run: |
+          cd frontend
+          docker compose up -d --build
+        env:
+          REACT_APP_API_URL: http://localhost:8080/api
+
+      - name: Wait for Infrastructure
         run: |
           timeout 120s bash -c 'until curl -f http://localhost:8080/api/health; do echo "Waiting on backend"; sleep 5; done'
-          sleep 5
-          echo "Backend ready!"
+          timeout 60s bash -c 'until curl -f http://localhost:3000; do echo "Waiting on frontend"; sleep 5; done'
 
       - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
-          start: npm start
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 180
+          browser: chrome
         env:
-          REACT_APP_API_URL: http://localhost:8080/api
+          CYPRESS_BASE_URL: http://localhost:3000
