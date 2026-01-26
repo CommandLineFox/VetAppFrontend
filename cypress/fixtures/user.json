@@ -1,0 +1,10 @@
+{
+  "validUser": {
+    "licenseNumber": "1",
+    "password": "testing1"
+  },
+  "invalidUser": {
+    "licenseNumber": "99999",
+    "password": "wrongpassword"
+  }
+}
