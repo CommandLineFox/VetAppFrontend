@@ -5,9 +5,13 @@ services:
       dockerfile: Dockerfile
       args:
         - REACT_APP_API_URL=http://localhost:8080/api
+      cache_from:
+        - type=registry,ref=user/app:cache
     container_name: vet_frontend_app
     ports:
       - "3000:80"
+    networks:
+      - vet-network
     restart: always
 
 networks:
