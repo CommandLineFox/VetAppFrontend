@@ -44,8 +44,9 @@ jobs:
 
       - name: Wait for Backend & Database Seed
         run: |
+          timeout 120s bash -c 'until curl -f http://localhost:8080/api/health; do echo "Waiting on backend"; sleep 5; done'
           sleep 5
-          echo "Backend ready"
+          echo "Backend ready!"
 
       - name: Run Cypress
         uses: cypress-io/github-action@v6
@@ -53,4 +54,6 @@ jobs:
           working-directory: frontend
           start: npm start
           wait-on: 'http://localhost:3000'
-          wait-on-timeout: 120
+          wait-on-timeout: 180
+        env:
+          REACT_APP_API_URL: http://localhost:8080/api
