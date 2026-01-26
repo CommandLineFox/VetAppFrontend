@@ -37,22 +37,23 @@ jobs:
       - name: Checkout Backend
         run: git clone https://github.com/CommandLineFox/VetAppBackend.git backend
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
-      - name: Start Backend API
+      - name: Start backend and database
         run: |
           cd backend
-          mvn spring-boot:run &
+          docker compose up -d --build
+
+      - name: Wait for Backend & Database Seed
+        run: |
+          timeout 120s bash -c 'until curl -f http://localhost:8080/api/health; do echo "Waiting on backend"; sleep 5; done'
+          sleep 5
+          echo "Backend ready!"
 
       - name: Run Cypress
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
           start: npm start
-          wait-on: 'http://localhost:8080/api/auth/login, http://localhost:3000'
+          wait-on: 'http://localhost:3000'
           wait-on-timeout: 180
+        env:
+          REACT_APP_API_URL: http://localhost:8080/api
