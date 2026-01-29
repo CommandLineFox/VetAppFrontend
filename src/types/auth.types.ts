@@ -3,6 +3,10 @@ export interface AuthorizationRequest {
     password: string;
 }
 
+export interface AuthorizationGoogleRequest {
+    token: string;
+}
+
 export interface AuthorizationResponse {
     token: string;
 }
