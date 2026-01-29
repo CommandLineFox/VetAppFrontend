@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {Button} from "../../components/Button/Button";
+import {GoogleButton} from "../../components/Button/GoogleButton";
 import {Input} from "../../components/Input/Input";
 import {useAuth} from "../../hooks/useAuth";
 import {FormContainer, Title} from './LoginForm.styles';
@@ -27,9 +28,15 @@ export const LoginForm = () => {
             password
         });
 
-        if (success) {
-            navigate('/home');
-        }
+        if (success) navigate('/home');
+    };
+
+    const handleGoogleSuccess = async (credentialResponse: any) => {
+        const success = await login({
+            token: credentialResponse.credential
+        });
+
+        if (success) navigate('/home');
     };
 
     const displayError = error || validationError || undefined;
@@ -44,7 +51,6 @@ export const LoginForm = () => {
                 value={license}
                 onChange={(e) => setLicense(e.target.value)}
                 error={displayError}
-                placeholder=""
                 disabled={loading}
                 data-cy="license-input"
             />
@@ -55,7 +61,6 @@ export const LoginForm = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 error={displayError}
-                placeholder=""
                 disabled={loading}
                 data-cy="password-input"
             />
@@ -68,6 +73,12 @@ export const LoginForm = () => {
             >
                 {loading ? 'Logging in...' : 'Login'}
             </Button>
+
+            <GoogleButton
+                onSuccess={handleGoogleSuccess}
+                onError={() => setValidationError("Google Login Failed")}
+                width="320"
+            />
         </FormContainer>
     );
 };
