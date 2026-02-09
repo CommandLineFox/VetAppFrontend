@@ -1,10 +1,11 @@
+import {Box} from "@mui/material";
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {Button} from "../../components/Button/Button";
 import {GoogleButton} from "../../components/Button/GoogleButton";
 import {Input} from "../../components/Input/Input";
 import {useAuth} from "../../hooks/useAuth";
-import {FormContainer, Title} from './LoginForm.styles';
+import {StyledFormContainer, StyledTitle} from './LoginForm.styles';
 
 export const LoginForm = () => {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const LoginForm = () => {
             password
         });
 
-        if (success) navigate('/home');
+        if (success) navigate('/');
     };
 
     const handleGoogleSuccess = async (credentialResponse: any) => {
@@ -42,43 +43,48 @@ export const LoginForm = () => {
     const displayError = error || validationError || undefined;
 
     return (
-        <FormContainer onSubmit={handleSubmit}>
-            <Title>Veterinarian Login</Title>
+        <StyledFormContainer elevation={0}>
+            <StyledTitle variant="h5" component="h2">
+                Veterinarian Login
+            </StyledTitle>
 
-            <Input
-                label="License Number"
-                type="number"
-                value={license}
-                onChange={(e) => setLicense(e.target.value)}
-                error={displayError}
-                disabled={loading}
-                data-cy="license-input"
-            />
+            <Box component="form" onSubmit={handleSubmit} noValidate>
+                <Input
+                    label="License Number"
+                    type="number"
+                    value={license}
+                    onChange={(e) => setLicense(e.target.value)}
+                    error={displayError}
+                    disabled={loading}
+                    data-cy="license-input"
+                />
 
-            <Input
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={displayError}
-                disabled={loading}
-                data-cy="password-input"
-            />
+                <Input
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    error={displayError}
+                    disabled={loading}
+                    data-cy="password-input"
+                />
 
-            <Button
-                primary
-                type="submit"
-                disabled={loading}
-                data-cy="login-button"
-            >
-                {loading ? 'Logging in...' : 'Login'}
-            </Button>
+                <Button
+                    primary
+                    type="submit"
+                    disabled={loading}
+                    data-cy="login-button"
+                    fullWidth
+                >
+                    {loading ? 'Logging in...' : 'Login'}
+                </Button>
 
-            <GoogleButton
-                onSuccess={handleGoogleSuccess}
-                onError={() => setValidationError("Google Login Failed")}
-                width="320"
-            />
-        </FormContainer>
+                <GoogleButton
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => setValidationError("Google Login Failed")}
+                    width="320"
+                />
+            </Box>
+        </StyledFormContainer>
     );
 };

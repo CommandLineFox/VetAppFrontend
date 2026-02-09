@@ -13,13 +13,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredPermi
     const location = useLocation();
 
     if (!token) {
-        return <Navigate to="/" state={{ from: location }} replace/>;
+        return <Navigate to="/login" state={{ from: location }} replace/>;
     }
 
     if (requiredPermission &&
         !permissions.includes(requiredPermission) &&
         !permissions.includes('ADMIN')) {
-        return <Navigate to="/home" replace/>;
+        return <Navigate to="/" replace/>;
     }
 
     return <>{children}</>;

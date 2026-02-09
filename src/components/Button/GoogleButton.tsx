@@ -1,6 +1,6 @@
 import React from 'react';
-import {GoogleLogin} from '@react-oauth/google';
-import {GoogleWrapper, Divider} from './GoogleButton.styles';
+import { GoogleLogin } from '@react-oauth/google';
+import { GoogleWrapper, StyledDivider, GoogleButtonContainer } from './GoogleButton.styles';
 
 interface GoogleButtonProps {
     onSuccess: (response: any) => void;
@@ -11,14 +11,17 @@ interface GoogleButtonProps {
 export const GoogleButton = ({ onSuccess, onError, width = "340" }: GoogleButtonProps) => {
     return (
         <GoogleWrapper>
-            <Divider>or</Divider>
-            <GoogleLogin
-                onSuccess={onSuccess}
-                onError={onError}
-                theme="outline"
-                shape="rectangular"
-                width={width}
-            />
+            <StyledDivider>or</StyledDivider>
+
+            <GoogleButtonContainer>
+                <GoogleLogin
+                    onSuccess={onSuccess}
+                    onError={onError}
+                    theme="outline"
+                    shape="rectangular"
+                    width={width}
+                />
+            </GoogleButtonContainer>
         </GoogleWrapper>
     );
 };

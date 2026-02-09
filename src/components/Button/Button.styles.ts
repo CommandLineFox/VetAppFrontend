@@ -1,23 +1,25 @@
-import styled from 'styled-components';
+import {styled} from '@mui/material/styles';
+import MuiButton from '@mui/material/Button';
 
-export const StyledButton = styled.button<{ $primary?: boolean }>`
-    padding: 12px 24px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s;
+export const StyledMuiButton = styled(MuiButton, {
+    shouldForwardProp: (prop) => prop !== '$primary',
+})<{ $primary?: boolean }>(({ theme, $primary }) => ({
+    padding: '12px 24px',
+    borderRadius: '6px',
+    fontWeight: 600,
+    textTransform: 'none',
+    transition: 'all 0.2s',
 
-    background-color: ${props => props.$primary ? '#1890ff' : '#f5f5f5'};
-    color: ${props => props.$primary ? '#fff' : '#000'};
+    backgroundColor: $primary ? '#1890ff' : '#f5f5f5',
+    color: $primary ? '#fff' : '#000',
 
-    &:hover {
-        opacity: 0.8;
-    }
+    '&:hover': {
+        backgroundColor: $primary ? '#0073e6' : '#e0e0e0',
+        opacity: 0.8,
+    },
 
-    &:disabled {
-        background-color: #f5f5f5;
-        color: #b8b8b8;
-        cursor: not-allowed;
-    }
-`;
+    '&:disabled': {
+        backgroundColor: '#f5f5f5',
+        color: '#b8b8b8',
+    },
+}));

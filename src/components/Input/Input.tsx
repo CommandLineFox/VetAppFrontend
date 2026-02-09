@@ -1,17 +1,24 @@
 import React from 'react';
-import {InputWrapper, StyledInput, ErrorMessage} from './Input.styles';
+import {StyledTextField} from './Input.styles';
+import {TextFieldProps} from '@mui/material';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<TextFieldProps, 'error'> {
     label?: string;
     error?: string;
 }
 
 export const Input = ({ label, error, ...rest }: InputProps) => {
     return (
-        <InputWrapper>
-            {label && <label>{label}</label>}
-            <StyledInput $hasError={!!error} {...rest} />
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-        </InputWrapper>
+        <StyledTextField
+            label={label}
+            error={!!error}
+            helperText={error}
+            variant="outlined"
+            fullWidth
+            InputLabelProps={{
+                shrink: true,
+            }}
+            {...rest}
+        />
     );
 };

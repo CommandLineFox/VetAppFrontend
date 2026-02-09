@@ -1,8 +1,8 @@
-import React from 'react';
-import { Typography } from '@mui/material';
-import { HomeWrapper, WelcomeTitle } from "./HomePage.styles";
+import {Typography} from "@mui/material";
+import React from "react";
+import {HomeWrapper, WelcomeTitle} from "./SpeciesPage.styles";
 
-const HomePage = () => {
+const SpeciesPage = () => {
     return (
         <HomeWrapper>
             <WelcomeTitle variant="h3" component="h1">
@@ -15,4 +15,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default SpeciesPage;
