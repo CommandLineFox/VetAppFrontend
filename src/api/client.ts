@@ -16,3 +16,16 @@ apiClient.interceptors.request.use((config) => {
     }
     return config;
 });
+
+apiClient.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            window.dispatchEvent(new Event('force-logout'));
+        }
+
+        return Promise.reject(error);
+    }
+);
