@@ -43,8 +43,8 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       JWT_EXPIRATION: ${{ secrets.JWT_EXPIRATION }}
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      REACT_APP_API_URL: ${{ secrets.API_URL }}
-      REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      REACT_APP_API_URL: ${{ secrets.VITE_APP_API_URL }}
+      REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.VITE_APP_GOOGLE_CLIENT_ID }}
     steps:
       - name: Checkout Frontend
         uses: actions/checkout@v4

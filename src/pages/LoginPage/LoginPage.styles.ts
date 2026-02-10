@@ -1,10 +1,11 @@
-import styled from 'styled-components';
+import {styled} from '@mui/material/styles';
+import {Box, BoxProps} from '@mui/material';
 
-export const PageContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100vw;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-`;
+export const PageContainer = styled(Box)<BoxProps>({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+    width: '100vw',
+    background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+});

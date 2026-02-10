@@ -1,15 +1,17 @@
-import { ReportHandler } from 'web-vitals';
+import {Metric} from 'web-vitals';
 
-const reportWebVitals = (onPerfEntry?: ReportHandler) => {
-  if (onPerfEntry && onPerfEntry instanceof Function) {
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-      getCLS(onPerfEntry);
-      getFID(onPerfEntry);
-      getFCP(onPerfEntry);
-      getLCP(onPerfEntry);
-      getTTFB(onPerfEntry);
-    });
-  }
+const reportWebVitals = (onPerfEntry?: (metric: Metric) => void) => {
+    if (onPerfEntry) {
+        import('web-vitals').then((webVitals) => {
+            const { onCLS, onFID, onFCP, onLCP, onTTFB, getCLS, getFID, getFCP, getLCP, getTTFB } = webVitals as any;
+
+            (onCLS || getCLS)?.(onPerfEntry);
+            (onFID || getFID)?.(onPerfEntry);
+            (onFCP || getFCP)?.(onPerfEntry);
+            (onLCP || getLCP)?.(onPerfEntry);
+            (onTTFB || getTTFB)?.(onPerfEntry);
+        });
+    }
 };
 
 export default reportWebVitals;

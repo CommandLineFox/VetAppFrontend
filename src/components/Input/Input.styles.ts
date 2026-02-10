@@ -1,26 +1,32 @@
-import styled from 'styled-components';
+import {styled} from '@mui/material/styles';
+import {TextField} from '@mui/material';
 
-export const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-`;
-
-export const StyledInput = styled.input<{ $hasError?: boolean }>`
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid ${props => props.$hasError ? '#ff4d4f' : '#d9d9d9'};
-    outline: none;
-    font-size: 14px;
-
-    &:focus {
-        border-color: ${props => props.$hasError ? '#ff4d4f' : '#40a9ff'};
-        box-shadow: 0 0 0 2px ${props => props.$hasError ? 'rgba(255,77,79,0.2)' : 'rgba(24,144,255,0.2)'};
+export const StyledTextField = styled(TextField)(({ theme }) => ({
+    width: '100%',
+    '& .MuiOutlinedInput-root': {
+        borderRadius: '6px',
+        fontSize: '14px',
+        transition: 'all 0.2s',
+        '& fieldset': {
+            borderColor: '#d9d9d9',
+        },
+        '&:hover fieldset': {
+            borderColor: '#40a9ff',
+        },
+        '&.Mui-focused fieldset': {
+            borderWidth: '1px',
+            boxShadow: '0 0 0 2px rgba(24,144,255,0.2)',
+        },
+    },
+    '& .MuiInputLabel-root': {
+        fontSize: '14px',
+        color: '#262626',
+        marginBottom: '4px',
+        position: 'relative',
+        transform: 'none',
+    },
+    '& .MuiFormHelperText-root': {
+        marginLeft: 0,
+        fontSize: '12px',
     }
-`;
-
-export const ErrorMessage = styled.span`
-  color: #ff4d4f;
-  font-size: 12px;
-`;
+}));

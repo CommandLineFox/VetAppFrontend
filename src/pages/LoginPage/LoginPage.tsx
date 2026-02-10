@@ -1,10 +1,11 @@
-import {LoginForm} from "../../features/LoginForm/LoginForm";
-import {PageContainer} from "./LoginPage.styles";
+import React from 'react';
+import { LoginForm } from "../../features/LoginForm/LoginForm";
+import { PageContainer } from "./LoginPage.styles";
 
 const LoginPage = () => {
     return (
-        <PageContainer>
-            <LoginForm/>
+        <PageContainer component="main">
+            <LoginForm />
         </PageContainer>
     );
 };

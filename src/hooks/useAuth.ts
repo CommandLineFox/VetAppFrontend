@@ -1,12 +1,14 @@
 import {AxiosError} from "axios";
 import {useState} from 'react';
-import {authService} from '../services/authService';
+import {useAuthContext} from "../context/AuthContext";
+import {authService} from '../services/auth.service';
 import {AuthorizationGoogleRequest, AuthorizationRequest} from "../types/auth.types";
 import {ErrorResponse} from "../types/error.types";
 
 export const useAuth = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { saveAuth } = useAuthContext();
 
     function login(credentials: AuthorizationRequest): Promise<boolean>;
     function login(googleToken: AuthorizationGoogleRequest): Promise<boolean>;
@@ -23,7 +25,7 @@ export const useAuth = () => {
                 response = await authService.loginWithGoogle(data);
             }
 
-            localStorage.setItem('token', response.token);
+            saveAuth(response.token);
             return true;
         } catch (err) {
             const axiosError = err as AxiosError<ErrorResponse>;

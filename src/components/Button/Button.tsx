@@ -1,15 +1,15 @@
 import React from 'react';
-import {StyledButton} from './Button.styles';
+import {StyledMuiButton} from './Button.styles';
+import {ButtonProps as MuiButtonProps} from '@mui/material/Button';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children: React.ReactNode;
+interface ButtonProps extends MuiButtonProps {
     primary?: boolean;
 }
 
 export const Button = ({ children, primary, ...rest }: ButtonProps) => {
     return (
-        <StyledButton $primary={primary} {...rest}>
+        <StyledMuiButton $primary={primary} {...rest}>
             {children}
-        </StyledButton>
+        </StyledMuiButton>
     );
 };
