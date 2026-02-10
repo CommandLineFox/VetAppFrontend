@@ -13,7 +13,7 @@ import {GlobalStyles} from "./styles/GlobalStyles";
 const theme = createTheme();
 
 const App = () => {
-    const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || '';
+    const googleClientId = import.meta.env.VITE_APP_GOOGLE_CLIENT_ID || '';
 
     return (
         <GoogleOAuthProvider clientId={googleClientId}>
