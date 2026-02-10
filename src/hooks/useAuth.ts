@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {useState} from 'react';
 import {useAuthContext} from "../context/AuthContext";
-import {authService} from '../services/authService';
+import {authService} from '../services/auth.service';
 import {AuthorizationGoogleRequest, AuthorizationRequest} from "../types/auth.types";
 import {ErrorResponse} from "../types/error.types";
 

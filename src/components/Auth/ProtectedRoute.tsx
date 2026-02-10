@@ -1,7 +1,7 @@
 import React from "react";
 import {Navigate, useLocation} from "react-router-dom";
+import {Permission} from "../../constants/permissions.constants";
 import {useAuthContext} from "../../context/AuthContext";
-import {Permission} from "../../types/permissions.types";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;

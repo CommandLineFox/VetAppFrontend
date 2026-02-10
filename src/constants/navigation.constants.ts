@@ -1,4 +1,4 @@
-import {Permission} from "../types/permissions.types";
+import {Permission} from "./permissions.constants";
 
 export interface NavItem {
     label: string;
