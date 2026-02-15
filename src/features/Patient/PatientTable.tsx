@@ -1,29 +1,19 @@
 import {GenericTable} from "../../components/GenericTable/GenericTable";
 import {Permission} from "../../constants/permissions.constants";
 import {PATIENT_COLUMNS} from "../../constants/table.constants";
-import {Patient} from "../../types/patient.types";
+import {Patient} from "../../types/patient.types.ts";
+import {GeneralTableProps} from "../../types/table.types.ts";
 
-interface PatientTableProps {
-    data: Patient[];
-    title?: string;
-    searchTerm?: string;
-    onSearchChange?: (val: string) => void;
-}
-
-export const PatientTable = ({ data, title = "Patients Register", searchTerm, onSearchChange }: PatientTableProps) => {
-    return (
-        <GenericTable<Patient>
-            title={title}
-            data={data}
-            columns={PATIENT_COLUMNS}
-            searchTerm={searchTerm}
-            onSearchChange={onSearchChange}
-            onCreate={() => console.log('Open Add Patient Form')}
-            createPermission={Permission.PATIENT_ADD}
-            onEdit={(patient) => console.log('Editing patient:', patient.name)}
-            editPermission={Permission.PATIENT_UPDATE}
-            onDelete={(patient) => console.log('Deleting patient:', patient.id)}
-            deletePermission={Permission.PATIENT_DELETE}
-        />
-    );
-};
+export const PatientTable = (props: GeneralTableProps<Patient>) => (
+    <GenericTable<Patient>
+        {...props}
+        title="Patients"
+        columns={PATIENT_COLUMNS}
+        createPermission={Permission.PATIENT_ADD}
+        editPermission={Permission.PATIENT_UPDATE}
+        deletePermission={Permission.PATIENT_DELETE}
+        onCreate={() => {}}
+        onEdit={(item) => {}}
+        onDelete={(item) => {}}
+    />
+);

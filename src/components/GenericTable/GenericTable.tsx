@@ -1,8 +1,18 @@
 import React from 'react';
-import {Table, TableBody, TableCell, TablePagination, Box, Typography, Button, TextField} from '@mui/material';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TablePagination,
+    Box,
+    Typography,
+    Button,
+    TextField,
+    TableSortLabel
+} from '@mui/material';
 import {Permission} from "../../constants/permissions.constants";
 import {Column} from "../../types/table.types";
-import {StyledTableContainer, StyledTableHead, StyledTableRow, ActionsWrapper} from './GenericTable.styles';
+import {StyledTableContainer, StyledTableHead, StyledTableRow, StyledHeaderCell, TableToolbar, ActionsWrapper} from './GenericTable.styles';
 import {HasPermission} from "../Auth/HasPermission";
 
 interface GenericTableProps<T> {
@@ -23,41 +33,23 @@ interface GenericTableProps<T> {
     onPageChange?: (event: unknown, newPage: number) => void;
     onRowsPerPageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onAdvancedFilter?: () => void;
+    sortBy?: string;
+    direction?: 'asc' | 'desc';
+    onSort?: (property: string) => void;
 }
 
 export const GenericTable = <T extends { id?: string | number }>({
-                                                                     title,
-                                                                     data,
-                                                                     columns,
-                                                                     searchTerm,
-                                                                     onSearchChange,
-                                                                     onCreate,
-                                                                     createPermission,
-                                                                     onEdit,
-                                                                     onDelete,
-                                                                     editPermission,
-                                                                     deletePermission,
-                                                                     page,
-                                                                     rowsPerPage,
-                                                                     totalCount,
-                                                                     onPageChange,
-                                                                     onRowsPerPageChange,
-                                                                     onAdvancedFilter,
+                                                                     title, data, columns, searchTerm, onSearchChange, onCreate,
+                                                                     createPermission, onEdit, onDelete, editPermission, deletePermission,
+                                                                     page = 0, rowsPerPage = 10, totalCount = 0, onPageChange,
+                                                                     onRowsPerPageChange, onAdvancedFilter, sortBy, direction, onSort,
                                                                  }: GenericTableProps<T>) => {
 
     const showActions = onEdit || onDelete;
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                gap: 2,
-                mb: 2,
-                px: 1
-            }}>
+            <TableToolbar>
                 <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold' }}>
                     {title}
                 </Typography>
@@ -66,83 +58,69 @@ export const GenericTable = <T extends { id?: string | number }>({
                     {onSearchChange && (
                         <TextField
                             size="small"
-                            label="Search"
-                            variant="outlined"
+                            label="Pretraga"
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
-                            sx={{ minWidth: 200 }}
                         />
                     )}
-
                     {onAdvancedFilter && (
-                        <Button
-                            variant="outlined"
-                            onClick={onAdvancedFilter}
-                            sx={{ height: '40px' }}
-                        >
-                            Filters
-                        </Button>
+                        <Button variant="outlined" onClick={onAdvancedFilter}>Filteri</Button>
                     )}
-
                     {onCreate && createPermission && (
                         <HasPermission requiredPermission={createPermission}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={onCreate}
-                                sx={{ whiteSpace: 'nowrap', px: 3 }}
-                            >
-                                Add New
-                            </Button>
+                            <Button variant="contained" onClick={onCreate}>Dodaj novo</Button>
                         </HasPermission>
                     )}
                 </Box>
-            </Box>
+            </TableToolbar>
 
             <StyledTableContainer>
                 <Table stickyHeader>
                     <StyledTableHead>
                         <StyledTableRow>
                             {columns.map((column) => (
-                                <TableCell
+                                <StyledHeaderCell
                                     key={column.id.toString()}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth }}
+                                    minwidth={column.minWidth}
+                                    sortDirection={sortBy === column.id ? direction : false}
                                 >
-                                    {column.label}
-                                </TableCell>
+                                    {onSort ? (
+                                        <TableSortLabel
+                                            active={sortBy === column.id}
+                                            direction={sortBy === column.id ? direction : 'asc'}
+                                            onClick={() => onSort(column.id.toString())}
+                                        >
+                                            {column.label}
+                                        </TableSortLabel>
+                                    ) : (
+                                        column.label
+                                    )}
+                                </StyledHeaderCell>
                             ))}
                             {showActions && <TableCell align="center">Actions</TableCell>}
                         </StyledTableRow>
                     </StyledTableHead>
+
                     <TableBody>
                         {data.length === 0 ? (
                             <StyledTableRow>
-                                <TableCell
-                                    colSpan={columns.length + (showActions ? 1 : 0)}
-                                    align="center"
-                                    sx={{ py: 3 }}
-                                >
+                                <TableCell colSpan={columns.length + (showActions ? 1 : 0)} align="center">
                                     <Typography variant="body1" color="text.secondary">
-                                        No data available.
+                                        No data found.
                                     </Typography>
                                 </TableCell>
                             </StyledTableRow>
                         ) : (
                             data.map((row, index) => (
                                 <StyledTableRow key={row.id || index}>
-                                    {columns.map((column) => {
-                                        const value = (row as any)[column.id];
-                                        return (
-                                            <TableCell key={column.id.toString()} align={column.align}>
-                                                {column.render
-                                                    ? column.render(row)
-                                                    : column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                            </TableCell>
-                                        );
-                                    })}
+                                    {columns.map((column) => (
+                                        <TableCell key={column.id.toString()} align={column.align}>
+                                            {column.render
+                                                ? column.render(row)
+                                                : (row as any)[column.id]}
+                                        </TableCell>
+                                    ))}
 
                                     {showActions && (
                                         <TableCell align="center">
@@ -154,7 +132,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                             size="small"
                                                             onClick={() => onEdit(row)}
                                                         >
-                                                            Edit
+                                                            Izmeni
                                                         </Button>
                                                     </HasPermission>
                                                 )}
@@ -167,7 +145,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                             color="error"
                                                             onClick={() => onDelete(row)}
                                                         >
-                                                            Delete
+                                                            Obriši
                                                         </Button>
                                                     </HasPermission>
                                                 )}
@@ -180,17 +158,13 @@ export const GenericTable = <T extends { id?: string | number }>({
                     </TableBody>
                 </Table>
 
-                {onPageChange && rowsPerPage !== undefined && totalCount !== undefined && (
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={totalCount}
-                        rowsPerPage={rowsPerPage}
-                        page={page || 0}
-                        onPageChange={onPageChange}
-                        onRowsPerPageChange={onRowsPerPageChange}
-                    />
-                )}
+                <TablePagination
+                    count={totalCount}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={onPageChange!}
+                    onRowsPerPageChange={onRowsPerPageChange}
+                />
             </StyledTableContainer>
         </Box>
     );

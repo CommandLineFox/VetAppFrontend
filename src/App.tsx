@@ -1,6 +1,6 @@
 import {GoogleOAuthProvider} from "@react-oauth/google";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {CssBaseline, createTheme, ThemeProvider} from "@mui/material"; // Dodato ovo
+import {CssBaseline, createTheme, ThemeProvider} from "@mui/material";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import {Permission} from "./constants/permissions.constants";
 import {AuthProvider} from "./context/AuthContext";

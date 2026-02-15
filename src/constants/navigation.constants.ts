@@ -7,7 +7,7 @@ export interface NavItem {
 }
 
 export const NAV_ITEMS: NavItem[] = [
-    { label: 'Početna', to: '/home', permission: null },
+    { label: 'Home', to: '/', permission: null },
     { label: 'Species', to: '/species', permission: Permission.SPECIES_LIST },
     { label: 'Breeds', to: '/breeds', permission: Permission.BREED_LIST },
     { label: 'Patients', to: '/patients', permission: Permission.PATIENT_LIST },

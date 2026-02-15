@@ -8,3 +8,17 @@ export interface Column<T> {
     format?: (value: any) => string;
     render?: (item: T) => ReactNode;
 }
+
+export interface GeneralTableProps<T> {
+    data: T[];
+    totalCount: number;
+    page: number;
+    rowsPerPage: number;
+    onPageChange: (event: unknown, newPage: number) => void;
+    onRowsPerPageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    sortBy: string;
+    direction: 'asc' | 'desc';
+    onSort: (property: string) => void;
+    searchTerm?: string;
+    onSearchChange?: (val: string) => void;
+}
