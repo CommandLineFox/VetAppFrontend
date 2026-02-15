@@ -64,11 +64,11 @@ export const GenericTable = <T extends { id?: string | number }>({
                         />
                     )}
                     {onAdvancedFilter && (
-                        <Button variant="outlined" onClick={onAdvancedFilter}>Filteri</Button>
+                        <Button variant="outlined" onClick={onAdvancedFilter}>Filters</Button>
                     )}
                     {onCreate && createPermission && (
                         <HasPermission requiredPermission={createPermission}>
-                            <Button variant="contained" onClick={onCreate}>Dodaj novo</Button>
+                            <Button variant="contained" onClick={onCreate}>Add new</Button>
                         </HasPermission>
                     )}
                 </Box>
@@ -132,7 +132,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                             size="small"
                                                             onClick={() => onEdit(row)}
                                                         >
-                                                            Izmeni
+                                                            Edit
                                                         </Button>
                                                     </HasPermission>
                                                 )}
@@ -145,7 +145,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                             color="error"
                                                             onClick={() => onDelete(row)}
                                                         >
-                                                            Obriši
+                                                            Delete
                                                         </Button>
                                                     </HasPermission>
                                                 )}
@@ -159,6 +159,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                 </Table>
 
                 <TablePagination
+                    component={"div"}
                     count={totalCount}
                     rowsPerPage={rowsPerPage}
                     page={page}

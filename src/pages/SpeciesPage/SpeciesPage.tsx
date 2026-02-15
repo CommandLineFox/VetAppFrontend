@@ -1,44 +1,37 @@
-import {useEffect, useState} from "react";
-import {Loading} from "../../components/Loading/Loading";
-import {SpeciesTable} from "../../features/Species/SpeciesTable";
-import {speciesService} from "../../services/species.service";
-import {Species} from "../../types/species.types";
-import {HomeWrapper} from "./SpeciesPage.styles";
+import {Alert, Box, Button} from "@mui/material";
+import {Loading} from "../../components/Loading/Loading.tsx";
+import {SpeciesTable} from "../../features/Species/SpeciesTable.tsx";
+import {useSpecies} from "../../hooks/useSpecies.ts";
 
 const SpeciesPage = () => {
-    const [species, setSpecies] = useState<Species[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [searchTerm, setSearchTerm] = useState('');
+    const { data, loading, error, pagination, retry } = useSpecies();
 
-    useEffect(() => {
-        const fetchSpecies = async () => {
-            try {
-                const data = await speciesService.findAll();
-                setSpecies(data);
-            } catch (error) {
-                console.error("Error while fetching species:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    if (loading && data.length === 0) return <Loading message="Učitavanje..."/>;
 
-        fetchSpecies();
-    }, []);
-
-    if (loading) {
+    if (error) {
         return (
-            <Loading message="Fetching species..."/>
+            <Box sx={{ p: 3 }}>
+                <Alert severity="error" action={
+                    <Button color="inherit" size="small" onClick={retry}>Try again</Button>
+                }>
+                    {error}
+                </Alert>
+            </Box>
         );
     }
 
     return (
-        <HomeWrapper>
-            <SpeciesTable
-                data={species}
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-            />
-        </HomeWrapper>
+        <SpeciesTable
+            data={data}
+            totalCount={pagination.totalElements}
+            page={pagination.params.page}
+            rowsPerPage={pagination.params.size}
+            sortBy={pagination.params.sortBy}
+            direction={pagination.params.direction}
+            onPageChange={pagination.onPageChange}
+            onRowsPerPageChange={pagination.onRowsPerPageChange}
+            onSort={pagination.onSort}
+        />
     );
 };
 
