@@ -1,8 +1,7 @@
 export interface PaginationParams {
     page?: number;
     size?: number;
-    sortBy?: string;
-    direction?: "asc" | "desc";
+    sort?: string;
 }
 
 export interface PageResponse<T> {

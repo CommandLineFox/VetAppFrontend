@@ -16,9 +16,12 @@ export interface GeneralTableProps<T> {
     rowsPerPage: number;
     onPageChange: (event: unknown, newPage: number) => void;
     onRowsPerPageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    sortBy: string;
-    direction: 'asc' | 'desc';
-    onSort: (property: string) => void;
+
+    sortBy?: string;
+    sortDirection?: 'asc' | 'desc';
+    onSort?: (property: string) => void;
+
     searchTerm?: string;
     onSearchChange?: (val: string) => void;
+    onRowClick?: (item: T) => void;
 }

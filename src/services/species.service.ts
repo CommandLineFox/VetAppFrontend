@@ -1,10 +1,10 @@
 import {apiClient} from "../api/client";
 import {API_ROUTES} from "../constants/apiRoutes.constants.ts";
 import {PaginationParams, PageResponse} from "../types/api.types.ts";
-import {Species, SpeciesCreateDto, SpeciesUpdateDto} from "../types/species.types";
+import {Species, SpeciesCreateDto, SpeciesSearchDto, SpeciesUpdateDto} from "../types/species.types";
 
 export const speciesService = {
-    findAll: async (params?: PaginationParams): Promise<Species[] | PageResponse<Species>> => {
+    findAll: async (params?: SpeciesSearchDto & PaginationParams): Promise<Species[] | PageResponse<Species>> => {
         const response = await apiClient.get<Species[] | PageResponse<Species>>(`${API_ROUTES.SPECIES}`, {
             params
         });

@@ -27,7 +27,7 @@ const SpeciesPage = () => {
             page={pagination.params.page}
             rowsPerPage={pagination.params.size}
             sortBy={pagination.params.sortBy}
-            direction={pagination.params.direction}
+            sortDirection={pagination.params.direction}
             onPageChange={pagination.onPageChange}
             onRowsPerPageChange={pagination.onRowsPerPageChange}
             onSort={pagination.onSort}

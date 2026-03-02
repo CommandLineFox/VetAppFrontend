@@ -35,10 +35,17 @@ export const StyledTableHead = styled(TableHead)(({ theme }) => ({
     },
 }));
 
-export const StyledTableRow = styled(TableRow)(({ theme }) => ({
+export const StyledTableRow = styled(TableRow, {
+    shouldForwardProp: (prop) => prop !== 'isClickable',
+})<{ isClickable?: boolean }>(({ theme, isClickable }) => ({
     '&:last-child td, &:last-child th': { border: 0 },
+
+    cursor: isClickable ? 'pointer' : 'default',
+
     '&:hover': {
-        backgroundColor: theme.palette.action.hover,
+        backgroundColor: isClickable
+            ? theme.palette.action.selected
+            : theme.palette.action.hover,
         transition: 'background-color 0.2s ease',
     },
 }));

@@ -15,3 +15,8 @@ export interface BreedUpdateDto {
     name?: string;
     speciesId?: number;
 }
+
+export interface BreedSearchDto {
+    name?: string;
+    speciesId?: number;
+}

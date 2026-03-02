@@ -1,38 +1,30 @@
-import {useCallback, useEffect, useState} from "react";
+import {useMemo, useState} from "react";
 import {speciesService} from "../services/species.service.ts";
-import {Species} from "../types/species.types.ts";
+import {Species, SpeciesSearchDto} from "../types/species.types.ts";
+import {useDataTable} from "./useDataTable.ts";
 import {usePagination} from "./usePagination.ts";
 
 export const useSpecies = () => {
-    const [data, setData] = useState<Species[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
-
     const pagination = usePagination('name');
 
-    const fetchSpecies = useCallback(async () => {
-        setLoading(true);
-        try {
-            const response = await speciesService.findAll(pagination.params);
+    const searchParams = useMemo(() => ({
+        name: searchTerm
+    }), [searchTerm]);
 
-            if ('content' in response) {
-                setData(response.content);
-                pagination.setTotalElements(response.totalElements);
-            } else {
-                setData(response);
-                pagination.setTotalElements(response.length);
-            }
-        } catch (err: any) {
-            setError(err.response?.data?.message || "Error...");
-        } finally {
-            setLoading(false);
-        }
-    }, [pagination.params]);
+    const { data, loading, error, retry } = useDataTable<Species, SpeciesSearchDto>({
+        fetchFn: speciesService.findAll,
+        searchParams,
+        pagination
+    });
 
-    useEffect(() => {
-        fetchSpecies();
-    }, [fetchSpecies]);
-
-    return { data, loading, error, searchTerm, setSearchTerm, pagination, retry: fetchSpecies };
+    return {
+        data, loading, error, searchTerm,
+        setSearchTerm: (val: string) => {
+            setSearchTerm(val);
+            pagination.onPageChange(null, 0);
+        },
+        pagination,
+        retry
+    };
 };

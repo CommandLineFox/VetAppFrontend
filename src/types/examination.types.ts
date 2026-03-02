@@ -40,3 +40,18 @@ export interface ExaminationUpdateDto {
     patientId?: number;
     veterinarianId?: number;
 }
+
+export interface ExaminationSearchDto {
+    date?: string;
+    dateFrom?: string;
+    dateTo?: string;
+    anamnesis?: string;
+    clinicalPresentation?: string;
+    diagnosis?: string;
+    treatment?: string;
+    laboratoryAnalysis?: string;
+    specialistExamination?: string;
+    remarks?: string;
+    patientId?: number;
+    veterinarianId?: number;
+}

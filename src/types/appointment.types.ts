@@ -22,3 +22,12 @@ export interface AppointmentUpdateDto {
     veterinarianId?: number;
     patientId?: number;
 }
+
+export interface AppointmentSearchDto {
+    date?: string;
+    dateFrom?: string;
+    dateTo?: string;
+    description?: string;
+    veterinarianId?: number;
+    patientId?: number;
+}

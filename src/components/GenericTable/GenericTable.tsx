@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TablePagination,
-    Box,
-    Typography,
-    Button,
-    TextField,
-    TableSortLabel
-} from '@mui/material';
+import {Table, TableBody, TableCell, TablePagination, Box, Typography, Button, TextField, TableSortLabel} from '@mui/material';
 import {Permission} from "../../constants/permissions.constants";
 import {Column} from "../../types/table.types";
 import {StyledTableContainer, StyledTableHead, StyledTableRow, StyledHeaderCell, TableToolbar, ActionsWrapper} from './GenericTable.styles';
@@ -34,18 +24,42 @@ interface GenericTableProps<T> {
     onRowsPerPageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onAdvancedFilter?: () => void;
     sortBy?: string;
-    direction?: 'asc' | 'desc';
+    sortDirection?: 'asc' | 'desc';
     onSort?: (property: string) => void;
+    onRowClick?: (item: T) => void;
 }
 
 export const GenericTable = <T extends { id?: string | number }>({
-                                                                     title, data, columns, searchTerm, onSearchChange, onCreate,
-                                                                     createPermission, onEdit, onDelete, editPermission, deletePermission,
-                                                                     page = 0, rowsPerPage = 10, totalCount = 0, onPageChange,
-                                                                     onRowsPerPageChange, onAdvancedFilter, sortBy, direction, onSort,
+                                                                     title,
+                                                                     data,
+                                                                     columns,
+                                                                     searchTerm,
+                                                                     onSearchChange,
+                                                                     onCreate,
+                                                                     createPermission,
+                                                                     onEdit,
+                                                                     onDelete,
+                                                                     editPermission,
+                                                                     deletePermission,
+                                                                     page = 0,
+                                                                     rowsPerPage = 10,
+                                                                     totalCount = 0,
+                                                                     onPageChange,
+                                                                     onRowsPerPageChange,
+                                                                     onAdvancedFilter,
+                                                                     sortBy,
+                                                                     sortDirection = 'asc',
+                                                                     onSort,
+                                                                     onRowClick,
                                                                  }: GenericTableProps<T>) => {
 
     const showActions = onEdit || onDelete;
+
+    const handleSort = (property: string) => {
+        if (onSort) {
+            onSort(property);
+        }
+    };
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -64,11 +78,15 @@ export const GenericTable = <T extends { id?: string | number }>({
                         />
                     )}
                     {onAdvancedFilter && (
-                        <Button variant="outlined" onClick={onAdvancedFilter}>Filters</Button>
+                        <Button variant="outlined" onClick={onAdvancedFilter}>
+                            Filters
+                        </Button>
                     )}
                     {onCreate && createPermission && (
                         <HasPermission requiredPermission={createPermission}>
-                            <Button variant="contained" onClick={onCreate}>Add new</Button>
+                            <Button variant="contained" onClick={onCreate}>
+                                Add new
+                            </Button>
                         </HasPermission>
                     )}
                 </Box>
@@ -82,14 +100,15 @@ export const GenericTable = <T extends { id?: string | number }>({
                                 <StyledHeaderCell
                                     key={column.id.toString()}
                                     align={column.align}
-                                    minwidth={column.minWidth}
-                                    sortDirection={sortBy === column.id ? direction : false}
+                                    style={{ minWidth: column.minWidth }}
+                                    // MUI koristi sortDirection na TableCell-u za accessibility
+                                    sortDirection={sortBy === column.id ? sortDirection : false}
                                 >
                                     {onSort ? (
                                         <TableSortLabel
                                             active={sortBy === column.id}
-                                            direction={sortBy === column.id ? direction : 'asc'}
-                                            onClick={() => onSort(column.id.toString())}
+                                            direction={sortBy === column.id ? sortDirection : 'asc'}
+                                            onClick={() => handleSort(column.id.toString())}
                                         >
                                             {column.label}
                                         </TableSortLabel>
@@ -98,7 +117,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                     )}
                                 </StyledHeaderCell>
                             ))}
-                            {showActions && <TableCell align="center">Actions</TableCell>}
+                            {showActions && <TableCell align="center" style={{ fontWeight: 'bold' }}>Actions</TableCell>}
                         </StyledTableRow>
                     </StyledTableHead>
 
@@ -106,14 +125,18 @@ export const GenericTable = <T extends { id?: string | number }>({
                         {data.length === 0 ? (
                             <StyledTableRow>
                                 <TableCell colSpan={columns.length + (showActions ? 1 : 0)} align="center">
-                                    <Typography variant="body1" color="text.secondary">
+                                    <Typography variant="body1" color="text.secondary" sx={{ py: 3 }}>
                                         No data found.
                                     </Typography>
                                 </TableCell>
                             </StyledTableRow>
                         ) : (
                             data.map((row, index) => (
-                                <StyledTableRow key={row.id || index}>
+                                <StyledTableRow
+                                    key={row.id || index}
+                                    sx={{ cursor: onRowClick ? 'pointer' : 'default' }}
+                                    onClick={() => onRowClick?.(row)}
+                                >
                                     {columns.map((column) => (
                                         <TableCell key={column.id.toString()} align={column.align}>
                                             {column.render
@@ -130,7 +153,10 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                         <Button
                                                             variant="outlined"
                                                             size="small"
-                                                            onClick={() => onEdit(row)}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                onEdit(row);
+                                                            }}
                                                         >
                                                             Edit
                                                         </Button>
@@ -143,7 +169,10 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                             variant="outlined"
                                                             size="small"
                                                             color="error"
-                                                            onClick={() => onDelete(row)}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                onDelete(row);
+                                                            }}
                                                         >
                                                             Delete
                                                         </Button>
@@ -159,12 +188,14 @@ export const GenericTable = <T extends { id?: string | number }>({
                 </Table>
 
                 <TablePagination
-                    component={"div"}
+                    rowsPerPageOptions={[5, 10, 25, 50]}
+                    component="div"
                     count={totalCount}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={onPageChange!}
                     onRowsPerPageChange={onRowsPerPageChange}
+                    labelRowsPerPage="Redova po strani:"
                 />
             </StyledTableContainer>
         </Box>
