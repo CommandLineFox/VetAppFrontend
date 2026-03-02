@@ -13,17 +13,27 @@ export const Navbar: React.FC = () => {
     }
 
     return (
-        <StyledAppBar position="static">
+        <StyledAppBar position="static" data-cy="navbar">
             <Toolbar sx={{ justifyContent: 'space-between' }}>
-                <Stack direction="row" spacing={3} alignItems="center">
+                <Stack direction="row" spacing={3} alignItems="center" data-cy="nav-links-container">
                     {NAV_ITEMS.map((item) => (
                         <React.Fragment key={item.to}>
                             {item.permission ? (
                                 <HasPermission requiredPermission={item.permission}>
-                                    <NavLink to={item.to}>{item.label}</NavLink>
+                                    <NavLink
+                                        to={item.to}
+                                        data-cy={`nav-link-${item.label.toLowerCase()}`}
+                                    >
+                                        {item.label}
+                                    </NavLink>
                                 </HasPermission>
                             ) : (
-                                <NavLink to={item.to}>{item.label}</NavLink>
+                                <NavLink
+                                    to={item.to}
+                                    data-cy={`nav-link-${item.label.toLowerCase()}`}
+                                >
+                                    {item.label}
+                                </NavLink>
                             )}
                         </React.Fragment>
                     ))}
@@ -33,6 +43,7 @@ export const Navbar: React.FC = () => {
                     variant="contained"
                     onClick={logout}
                     size="small"
+                    data-cy="logout-button"
                 >
                     Logout
                 </NavLogoutButton>

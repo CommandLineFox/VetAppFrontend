@@ -37,7 +37,7 @@ export const LoginForm = () => {
             token: credentialResponse.credential
         });
 
-        if (success) navigate('/home');
+        if (success) navigate('/');
     };
 
     const displayError = error || validationError || undefined;

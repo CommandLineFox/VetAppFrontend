@@ -24,3 +24,9 @@ export interface VeterinarianUpdateDto {
     password?: string;
     permissions?: number;
 }
+
+export interface VeterinarianSearchDto {
+    firstName?: string;
+    lastName?: string;
+    licenseNumber?: number;
+}

@@ -25,3 +25,12 @@ export interface OwnerUpdateDto {
     email?: string;
     jmbg?: string;
 }
+
+export interface OwnerSearchDto {
+    firstName?: string;
+    lastName?: string;
+    address?: string;
+    phoneNumber?: string;
+    email?: string;
+    jmbg?: string;
+}

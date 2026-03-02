@@ -2,7 +2,7 @@ import React, {createContext, useContext, useState, useMemo, useCallback, useEff
 import {jwtDecode} from 'jwt-decode';
 import {useNavigate} from "react-router-dom";
 import {AuthContextType} from "../types/context.types";
-import {emptyAuthState, getInitialAuthState, tokenToState} from "../utils/authUtils";
+import {emptyAuthState, getInitialAuthState, tokenToState} from "../utils/auth.utils.ts";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

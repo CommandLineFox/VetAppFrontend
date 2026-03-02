@@ -10,3 +10,7 @@ export interface SpeciesCreateDto {
 export interface SpeciesUpdateDto {
     name?: string;
 }
+
+export interface SpeciesSearchDto {
+    name?: string;
+}

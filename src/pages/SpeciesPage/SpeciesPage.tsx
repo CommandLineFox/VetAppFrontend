@@ -1,17 +1,24 @@
-import {Typography} from "@mui/material";
-import React from "react";
-import {HomeWrapper, WelcomeTitle} from "./SpeciesPage.styles";
+import {useSpecies} from "../../hooks/useSpecies";
+import {SpeciesTable} from "../../features/Species/SpeciesTable";
 
 const SpeciesPage = () => {
+    const { data, loading, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
+
     return (
-        <HomeWrapper>
-            <WelcomeTitle variant="h3" component="h1">
-                Welcome
-            </WelcomeTitle>
-            <Typography variant="body1">
-                Successful login
-            </Typography>
-        </HomeWrapper>
+        <SpeciesTable
+            data={data}
+            totalCount={pagination.totalElements}
+            page={pagination.params.page}
+            rowsPerPage={pagination.params.size}
+            onPageChange={pagination.onPageChange}
+            onRowsPerPageChange={pagination.onRowsPerPageChange}
+            onSort={pagination.onSort}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            onRefresh={retry}
+            sortBy={pagination.params.sortBy}
+            sortDirection={pagination.params.direction}
+        />
     );
 };
 

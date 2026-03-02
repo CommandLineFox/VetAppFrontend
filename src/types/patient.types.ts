@@ -34,3 +34,13 @@ export interface PatientUpdateDto {
     ownerId?: number;
     breedId?: number;
 }
+
+export interface PatientSearchDto {
+    name?: string;
+    birthDate?: string;
+    birthDateFrom?: string;
+    birthDateTo?: string;
+    gender?: string;
+    passportNumber?: string;
+    microchipNumber?: string;
+}

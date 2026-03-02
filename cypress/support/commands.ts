@@ -43,10 +43,43 @@ Cypress.Commands.add('login', (license: string, password: string) => {
     cy.get('[data-cy="login-button"]').click();
 });
 
+Cypress.Commands.add('loginAndSetup', (user: any) => {
+    cy.session([user.licenseNumber, user.password], () => {
+        cy.visit('/login');
+        cy.login(user.licenseNumber, user.password);
+        cy.url().should('not.include', '/login');
+    });
+});
+
+Cypress.Commands.add('goToSpecies', () => {
+    cy.get('[data-cy="nav-link-species"]').click();
+    cy.url().should('include', '/species');
+});
+
+Cypress.Commands.add('logout', () => {
+    cy.get('body').then(($body) => {
+        if ($body.find('[data-cy="logout-button"]').length > 0) {
+            cy.get('[data-cy="logout-button"]').click();
+            cy.url().should('include', '/login');
+        }
+    });
+
+    cy.window().then((win) => {
+        win.localStorage.clear();
+        win.sessionStorage.clear();
+    });
+});
+
 declare global {
     namespace Cypress {
         interface Chainable {
             login(license: string, password: string): Chainable<void>;
+
+            loginAndSetup(user: any): Chainable<void>;
+
+            goToSpecies(): Chainable<void>;
+
+            logout(): Chainable<void>;
         }
     }
 }
