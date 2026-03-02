@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import React, {ReactNode} from "react";
 
 export interface Column<T> {
     id: keyof T | string;
@@ -24,4 +24,8 @@ export interface GeneralTableProps<T> {
     searchTerm?: string;
     onSearchChange?: (val: string) => void;
     onRowClick?: (item: T) => void;
+
+    onCreate?: () => void;
+    onEdit?: (item: T) => void;
+    onDelete?: (item: T) => void;
 }

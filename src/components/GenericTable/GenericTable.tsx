@@ -1,8 +1,25 @@
 import React from 'react';
-import {Table, TableBody, TableCell, TablePagination, Box, Typography, Button, TextField, TableSortLabel} from '@mui/material';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TablePagination,
+    Box,
+    Typography,
+    Button,
+    TextField,
+    TableSortLabel
+} from '@mui/material';
 import {Permission} from "../../constants/permissions.constants";
 import {Column} from "../../types/table.types";
-import {StyledTableContainer, StyledTableHead, StyledTableRow, StyledHeaderCell, TableToolbar, ActionsWrapper} from './GenericTable.styles';
+import {
+    StyledTableContainer,
+    StyledTableHead,
+    StyledTableRow,
+    StyledHeaderCell,
+    TableToolbar,
+    ActionsWrapper
+} from './GenericTable.styles';
 import {HasPermission} from "../Auth/HasPermission";
 
 interface GenericTableProps<T> {
@@ -75,16 +92,21 @@ export const GenericTable = <T extends { id?: string | number }>({
                             label="Pretraga"
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
+                            inputProps={{ 'data-cy': 'table-search-input' }}
                         />
                     )}
                     {onAdvancedFilter && (
-                        <Button variant="outlined" onClick={onAdvancedFilter}>
+                        <Button variant="outlined" onClick={onAdvancedFilter} data-cy="table-filter-btn">
                             Filters
                         </Button>
                     )}
                     {onCreate && createPermission && (
                         <HasPermission requiredPermission={createPermission}>
-                            <Button variant="contained" onClick={onCreate}>
+                            <Button
+                                variant="contained"
+                                onClick={onCreate}
+                                data-cy="table-create-btn"
+                            >
                                 Add new
                             </Button>
                         </HasPermission>
@@ -101,7 +123,6 @@ export const GenericTable = <T extends { id?: string | number }>({
                                     key={column.id.toString()}
                                     align={column.align}
                                     style={{ minWidth: column.minWidth }}
-                                    // MUI koristi sortDirection na TableCell-u za accessibility
                                     sortDirection={sortBy === column.id ? sortDirection : false}
                                 >
                                     {onSort ? (
@@ -117,13 +138,17 @@ export const GenericTable = <T extends { id?: string | number }>({
                                     )}
                                 </StyledHeaderCell>
                             ))}
-                            {showActions && <TableCell align="center" style={{ fontWeight: 'bold' }}>Actions</TableCell>}
+                            {showActions && (
+                                <TableCell align="center" style={{ fontWeight: 'bold' }}>
+                                    Actions
+                                </TableCell>
+                            )}
                         </StyledTableRow>
                     </StyledTableHead>
 
                     <TableBody>
                         {data.length === 0 ? (
-                            <StyledTableRow>
+                            <StyledTableRow data-cy="table-no-data">
                                 <TableCell colSpan={columns.length + (showActions ? 1 : 0)} align="center">
                                     <Typography variant="body1" color="text.secondary" sx={{ py: 3 }}>
                                         No data found.
@@ -136,6 +161,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                     key={row.id || index}
                                     sx={{ cursor: onRowClick ? 'pointer' : 'default' }}
                                     onClick={() => onRowClick?.(row)}
+                                    data-cy={`table-row-${index}`}
                                 >
                                     {columns.map((column) => (
                                         <TableCell key={column.id.toString()} align={column.align}>
@@ -157,6 +183,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                                 e.stopPropagation();
                                                                 onEdit(row);
                                                             }}
+                                                            data-cy={`edit-btn-${row.id}`}
                                                         >
                                                             Edit
                                                         </Button>
@@ -173,6 +200,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                                                                 e.stopPropagation();
                                                                 onDelete(row);
                                                             }}
+                                                            data-cy={`delete-btn-${row.id}`}
                                                         >
                                                             Delete
                                                         </Button>
@@ -196,6 +224,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                     onPageChange={onPageChange!}
                     onRowsPerPageChange={onRowsPerPageChange}
                     labelRowsPerPage="Redova po strani:"
+                    data-cy="table-pagination"
                 />
             </StyledTableContainer>
         </Box>
