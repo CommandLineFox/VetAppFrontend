@@ -3,7 +3,7 @@ export {};
 describe('Login Functionality', () => {
     beforeEach(() => {
         cy.fixture('user').as('userData');
-        cy.visit('/login'); // Direktno na login
+        cy.visit('/login');
     });
 
     it('should display an error message for invalid credentials', function () {

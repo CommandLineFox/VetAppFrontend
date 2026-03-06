@@ -47,58 +47,55 @@ API.
 
 ### Configuration
 
-1. Environment Variables: Create a .env file in the root directory:
-
-```env
-    REACT_APP_API_URL=http://localhost:8080/api
-```
+1. Environment Variables: Create an .env file in the root directory:
+   ```env
+   VITE_APP_API_URL=http://localhost:8080/api
+   VITE_APP_GOOGLE_CLIENT_ID=your-google-client-id
+   ```
 
 ### Building and Running
 
 This assumes that you have a running backend instance with a database initialized.
 
 1. Clone the repository:
-
-```bash
-    git clone https://github.com/CommandLineFox/VetAppFrontend.git
-```
+   ```bash
+   git clone https://github.com/CommandLineFox/VetAppFrontend.git
+   ```
 
 2. Navigate to the project root:
-
-```bash
-    cd VetAppFrontend
-```
+   ```bash
+   cd VetAppFrontend
+   ```
 
 3. Install dependencies:
-
-```bash
-    npm install
-```
+   ```bash
+   npm install
+   ```
 
 4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-    npm start
-```
-
-## Running with Docker (Production Mode)
+## Running with Docker (Production)
 
 The frontend is containerized using a multi-stage Docker build, serving static files via Nginx.
 Steps
 
 ### Prerequisites
+
 - Docker
 - Docker Compose
 
 ### Steps
 
 1. Build and start the container:
-    
-```bash
-    docker-compose up --build
-```
 
-The application will be available at `http://localhost:3000`.
+   ```bash
+   docker-compose up --build -d
+   ```
+
+The application will be available at `http://domain:3000`.
 
 ## Testing
 
@@ -107,15 +104,15 @@ Running Tests
 
 To run tests in headless mode:
 
-```bash
-    npm run cypress:run
-```
+   ```bash
+   npm run cypress:run
+   ```
 
 To open the interactive Cypress Test Runner:
 
-```bash
-    npm run cypress:open
-```
+   ```bash
+   npm run cypress:open
+   ```
 
 ## System Architecture
 
