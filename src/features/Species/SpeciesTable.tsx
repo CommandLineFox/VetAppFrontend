@@ -1,16 +1,17 @@
-import {GenericModal} from "../../components/GenericModal/GenericModal.tsx";
+import {GenericModal} from "../../components/GenericModal/GenericModal";
 import {GenericTable} from "../../components/GenericTable/GenericTable";
+import {ConfirmDelete} from "../../components/ConfirmDelete/ConfirmDelete";
 import {Permission} from "../../constants/permissions.constants";
 import {SPECIES_COLUMNS} from "../../constants/table.constants";
-import {useTableActions} from "../../hooks/useTableActions.ts";
-import {speciesService} from "../../services/species.service.ts";
+import {useTableActions} from "../../hooks/useTableActions";
+import {speciesService} from "../../services/species.service";
 import {Species} from "../../types/species.types";
-import {GeneralTableProps} from "../../types/table.types.ts";
-import {SpeciesForm} from "./SpeciesForm.tsx";
+import {GeneralTableProps} from "../../types/table.types";
+import {SpeciesForm} from "./SpeciesForm";
 
 export const SpeciesTable = (props: GeneralTableProps<Species> & { onRefresh: () => void }) => {
     const {
-        isModalOpen, isDeleteOpen, selectedItem, loading: actionLoading,
+        isModalOpen, isDeleteOpen, selectedItem, loading, error,
         handleAdd, handleEdit, handleDeleteClick, confirmDelete,
         closeModal, closeDelete
     } = useTableActions<Species>(props.onRefresh, async (id) => {
@@ -31,7 +32,11 @@ export const SpeciesTable = (props: GeneralTableProps<Species> & { onRefresh: ()
                 onDelete={handleDeleteClick}
             />
 
-            <GenericModal open={isModalOpen} onClose={closeModal} title={selectedItem ? "Edit" : "New"}>
+            <GenericModal
+                open={isModalOpen}
+                onClose={closeModal}
+                title={selectedItem ? "Edit Species" : "New Species"}
+            >
                 <SpeciesForm
                     initialData={selectedItem}
                     onSuccess={() => {
@@ -42,8 +47,16 @@ export const SpeciesTable = (props: GeneralTableProps<Species> & { onRefresh: ()
                 />
             </GenericModal>
 
-            <GenericModal open={isDeleteOpen} onClose={closeDelete} title="Delete" onSave={confirmDelete} loading={actionLoading}>
-                Are you sure you want to delete <b>{selectedItem?.name}</b>?
+            <GenericModal
+                open={isDeleteOpen}
+                onClose={closeDelete}
+                title="Delete Confirmation"
+                onSave={confirmDelete}
+                loading={loading}
+                error={error}
+                saveLabel="Delete"
+            >
+                <ConfirmDelete name={selectedItem?.name} label="this species"/>
             </GenericModal>
         </>
     );

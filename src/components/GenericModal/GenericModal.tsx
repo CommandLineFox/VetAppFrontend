@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dialog, Button} from '@mui/material';
+import {Dialog, Button, Alert} from '@mui/material';
 import {StyledDialogTitle, StyledDialogContent, StyledDialogActions} from './GenericModal.styles';
 
 interface GenericModalProps {
@@ -10,6 +10,7 @@ interface GenericModalProps {
     onSave?: () => void;
     saveLabel?: string;
     loading?: boolean;
+    error?: string | null;
     dataCy?: string;
 }
 
@@ -21,6 +22,7 @@ export const GenericModal = ({
                                  onSave,
                                  saveLabel = "Save",
                                  loading,
+                                 error,
                                  dataCy = 'generic-modal'
                              }: GenericModalProps) => (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth data-cy={dataCy}>
@@ -29,6 +31,12 @@ export const GenericModal = ({
         </StyledDialogTitle>
 
         <StyledDialogContent dividers>
+            {error && (
+                <Alert severity="error" sx={{ mb: 2 }} data-cy={`${dataCy}-error`}>
+                    {error}
+                </Alert>
+            )}
+
             <div data-cy={`${dataCy}-content`}>
                 {children}
             </div>
@@ -39,6 +47,7 @@ export const GenericModal = ({
                 <Button
                     onClick={onClose}
                     color="inherit"
+                    disabled={loading}
                     data-cy={`${dataCy}-cancel-btn`}
                 >
                     Cancel
@@ -46,6 +55,7 @@ export const GenericModal = ({
                 <Button
                     onClick={onSave}
                     variant="contained"
+                    color={title.toLowerCase().includes('delete') ? 'error' : 'primary'}
                     disabled={loading}
                     data-cy={`${dataCy}-save-btn`}
                 >
