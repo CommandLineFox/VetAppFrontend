@@ -1,5 +1,6 @@
 import React from 'react';
-import {Dialog, Button, Alert} from '@mui/material';
+import {Dialog, Alert} from '@mui/material';
+import {Button} from "../Button/Button.tsx";
 import {StyledDialogTitle, StyledDialogContent, StyledDialogActions} from './GenericModal.styles';
 
 interface GenericModalProps {

@@ -6,7 +6,6 @@ import {
     TablePagination,
     Box,
     Typography,
-    Button,
     TextField,
     TableSortLabel
 } from '@mui/material';
@@ -21,6 +20,7 @@ import {
     ActionsWrapper
 } from './GenericTable.styles';
 import {HasPermission} from "../Auth/HasPermission";
+import {Button} from "../Button/Button";
 
 interface GenericTableProps<T> {
     title?: string;
