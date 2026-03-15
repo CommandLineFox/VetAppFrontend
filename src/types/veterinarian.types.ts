@@ -30,3 +30,9 @@ export interface VeterinarianSearchDto {
     lastName?: string;
     licenseNumber?: number;
 }
+
+export interface VeterinarianDisplayDto {
+    id: number;
+    firstName: string;
+    lastName: string;
+}

@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import {Permission} from "./constants/permissions.constants";
 import {AuthProvider} from "./context/AuthContext";
 import {MainLayout} from "./layouts/MainLayout";
+import BreedPage from "./pages/BreedPage/BreedPage.tsx";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SpeciesPage from "./pages/SpeciesPage/SpeciesPage";
@@ -29,6 +30,7 @@ const App = () => {
                             <Route element={<ProtectedRoute><MainLayout/></ProtectedRoute>}>
                                 <Route path="/" element={<HomePage/>}/>
                                 <Route path="/species" element={<ProtectedRoute requiredPermission={Permission.SPECIES_LIST}> <SpeciesPage/> </ProtectedRoute>}/>
+                                <Route path="/breeds" element={<ProtectedRoute requiredPermission={Permission.BREED_LIST}> <BreedPage/> </ProtectedRoute>}/>
                             </Route>
                         </Routes>
                     </AuthProvider>

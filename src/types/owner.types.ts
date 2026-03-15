@@ -34,3 +34,9 @@ export interface OwnerSearchDto {
     email?: string;
     jmbg?: string;
 }
+
+export interface OwnerDisplayDto {
+    id: number;
+    firstName: string;
+    lastName: string;
+}
