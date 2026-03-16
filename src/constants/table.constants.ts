@@ -1,4 +1,3 @@
-// constants/table.constants.ts
 import {Column} from "../types/table.types";
 import {Patient} from "../types/patient.types";
 import {Species} from "../types/species.types";

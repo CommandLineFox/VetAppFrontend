@@ -43,6 +43,7 @@ export interface PatientSearchDto {
     gender?: string;
     passportNumber?: string;
     microchipNumber?: string;
+    ownerId?: number;
 }
 
 export interface PatientDisplayDto {
