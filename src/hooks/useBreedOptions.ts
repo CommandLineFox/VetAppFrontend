@@ -3,7 +3,7 @@ import {breedService} from "../services/breed.service.ts";
 import {Breed, BreedSearchDto} from "../types/breed.types.ts";
 import {useDataTable} from "./useDataTable.ts";
 
-export const useBreedsOptions = (speciesId?: number) => {
+export const useBreedOptions = (speciesId?: number) => {
     const searchParams = useMemo(() => {
         return speciesId ? { speciesId } : {};
     }, [speciesId]);
