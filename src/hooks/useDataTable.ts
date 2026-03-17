@@ -1,4 +1,4 @@
-import {useState, useCallback, useEffect} from 'react';
+import {useState, useCallback, useEffect, useRef} from 'react';
 import {PageResponse} from '../types/api.types';
 import {cleanParams} from '../utils/api.utils';
 
@@ -13,7 +13,12 @@ export const useDataTable = <T, S>({ fetchFn, searchParams, pagination }: UseDat
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    const paramsKey = JSON.stringify(searchParams || {});
+    const paginationKey = JSON.stringify(pagination?.pageableParams || {});
+
     const fetchData = useCallback(async () => {
+        if (typeof fetchFn !== 'function') return;
+
         setLoading(true);
         try {
             const rawParams = {
@@ -22,22 +27,22 @@ export const useDataTable = <T, S>({ fetchFn, searchParams, pagination }: UseDat
             };
 
             const params = cleanParams(rawParams);
-
             const response = await fetchFn(params);
 
             if (response && typeof response === 'object' && 'content' in response) {
                 setData(response.content);
                 pagination?.setTotalElements(response.totalElements);
             } else {
-                setData(Array.isArray(response) ? response : []);
-                pagination?.setTotalElements(Array.isArray(response) ? response.length : 0);
+                const result = Array.isArray(response) ? response : [];
+                setData(result);
+                pagination?.setTotalElements(result.length);
             }
         } catch (err: any) {
             setError(err.response?.data?.message || "Error fetching data.");
         } finally {
             setLoading(false);
         }
-    }, [fetchFn, pagination?.pageableParams, searchParams]);
+    }, [fetchFn, paramsKey, paginationKey]);
 
     useEffect(() => {
         fetchData();

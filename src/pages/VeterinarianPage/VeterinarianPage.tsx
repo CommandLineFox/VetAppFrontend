@@ -1,11 +1,11 @@
-import {useSpecies} from "../../hooks/useSpecies";
-import {SpeciesTable} from "../../features/Species/SpeciesTable";
+import {useVeterinarians} from "../../hooks/useVeterinarians";
+import {VeterinarianTable} from "../../features/Veterinarian/VeterinarianTable";
 
-const SpeciesPage = () => {
-    const { data, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
+const VeterinarianPage = () => {
+    const { data, pagination, retry, searchTerm, setSearchTerm } = useVeterinarians();
 
     return (
-        <SpeciesTable
+        <VeterinarianTable
             data={data}
             totalCount={pagination.totalElements}
             page={pagination.params.page}
@@ -22,4 +22,4 @@ const SpeciesPage = () => {
     );
 };
 
-export default SpeciesPage;
+export default VeterinarianPage;

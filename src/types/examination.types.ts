@@ -1,5 +1,5 @@
-import {Patient} from "./patient.types";
-import {Veterinarian} from "./veterinarian.types";
+import {PatientDisplayDto} from "./patient.types";
+import {VeterinarianDisplayDto} from "./veterinarian.types";
 
 export interface Examination {
     id: number;
@@ -11,8 +11,8 @@ export interface Examination {
     laboratoryAnalysis?: string;
     specialistExamination?: string;
     remarks?: string;
-    patient: Patient;
-    veterinarian: Veterinarian;
+    patient: PatientDisplayDto;
+    veterinarian: VeterinarianDisplayDto;
 }
 
 export interface ExaminationCreateDto {

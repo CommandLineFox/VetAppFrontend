@@ -1,12 +1,12 @@
-import {Patient} from "./patient.types";
-import {Veterinarian} from "./veterinarian.types";
+import {PatientDisplayDto} from "./patient.types";
+import {VeterinarianDisplayDto} from "./veterinarian.types";
 
 export interface Appointment {
     id: number;
     date: string;
     description: string;
-    veterinarian: Veterinarian;
-    patient: Patient;
+    veterinarian: VeterinarianDisplayDto;
+    patient: PatientDisplayDto;
 }
 
 export interface AppointmentCreateDto {

@@ -1,11 +1,11 @@
-import {useSpecies} from "../../hooks/useSpecies";
-import {SpeciesTable} from "../../features/Species/SpeciesTable";
+import {useBreeds} from "../../hooks/useBreeds";
+import {BreedTable} from "../../features/Breed/BreedTable";
 
-const SpeciesPage = () => {
-    const { data, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
+const BreedPage = () => {
+    const { data, pagination, retry, searchTerm, setSearchTerm } = useBreeds();
 
     return (
-        <SpeciesTable
+        <BreedTable
             data={data}
             totalCount={pagination.totalElements}
             page={pagination.params.page}
@@ -22,4 +22,4 @@ const SpeciesPage = () => {
     );
 };
 
-export default SpeciesPage;
+export default BreedPage;

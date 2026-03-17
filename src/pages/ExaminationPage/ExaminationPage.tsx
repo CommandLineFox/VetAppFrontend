@@ -1,11 +1,11 @@
-import {useSpecies} from "../../hooks/useSpecies";
-import {SpeciesTable} from "../../features/Species/SpeciesTable";
+import {useExaminations} from "../../hooks/useExaminations";
+import {ExaminationTable} from "../../features/Examination/ExaminationTable";
 
-const SpeciesPage = () => {
-    const { data, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
+const ExaminationPage = () => {
+    const { data, pagination, retry, searchTerm, setSearchTerm } = useExaminations();
 
     return (
-        <SpeciesTable
+        <ExaminationTable
             data={data}
             totalCount={pagination.totalElements}
             page={pagination.params.page}
@@ -22,4 +22,4 @@ const SpeciesPage = () => {
     );
 };
 
-export default SpeciesPage;
+export default ExaminationPage;

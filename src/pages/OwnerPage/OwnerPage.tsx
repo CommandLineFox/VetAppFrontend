@@ -1,11 +1,11 @@
-import {useSpecies} from "../../hooks/useSpecies";
-import {SpeciesTable} from "../../features/Species/SpeciesTable";
+import {useOwners} from "../../hooks/useOwners";
+import {OwnerTable} from "../../features/Owner/OwnerTable";
 
-const SpeciesPage = () => {
-    const { data, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
+const OwnerPage = () => {
+    const { data, pagination, retry, searchTerm, setSearchTerm } = useOwners();
 
     return (
-        <SpeciesTable
+        <OwnerTable
             data={data}
             totalCount={pagination.totalElements}
             page={pagination.params.page}
@@ -22,4 +22,4 @@ const SpeciesPage = () => {
     );
 };
 
-export default SpeciesPage;
+export default OwnerPage;

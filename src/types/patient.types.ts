@@ -1,5 +1,5 @@
-import {Breed} from "./breed.types";
-import {Owner} from "./owner.types";
+import {BreedDisplayDto} from "./breed.types";
+import {OwnerDisplayDto} from "./owner.types";
 
 export interface Patient {
     id: number;
@@ -9,8 +9,8 @@ export interface Patient {
     passportNumber: string;
     microchipNumber: string;
     cartonNumber: number;
-    owner: Owner;
-    breed: Breed;
+    owner: OwnerDisplayDto;
+    breed: BreedDisplayDto;
 }
 
 export interface PatientCreateDto {
@@ -43,4 +43,10 @@ export interface PatientSearchDto {
     gender?: string;
     passportNumber?: string;
     microchipNumber?: string;
+    ownerId?: number;
+}
+
+export interface PatientDisplayDto {
+    id: number;
+    name: string;
 }

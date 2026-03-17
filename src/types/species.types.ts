@@ -14,3 +14,8 @@ export interface SpeciesUpdateDto {
 export interface SpeciesSearchDto {
     name?: string;
 }
+
+export interface SpeciesDisplayDto {
+    id: number;
+    name: string;
+}

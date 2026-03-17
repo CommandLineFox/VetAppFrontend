@@ -3,8 +3,8 @@ export interface Owner {
     firstName: string;
     lastName: string;
     address: string;
-    phoneNumber?: string;
-    email?: string;
+    phoneNumber: string;
+    email: string;
     jmbg: string;
 }
 
@@ -12,8 +12,8 @@ export interface OwnerCreateDto {
     firstName: string;
     lastName: string;
     address: string;
-    phoneNumber?: string;
-    email?: string;
+    phoneNumber: string;
+    email: string;
     jmbg: string;
 }
 
@@ -33,4 +33,10 @@ export interface OwnerSearchDto {
     phoneNumber?: string;
     email?: string;
     jmbg?: string;
+}
+
+export interface OwnerDisplayDto {
+    id: number;
+    firstName: string;
+    lastName: string;
 }

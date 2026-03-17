@@ -1,11 +1,11 @@
-import {useSpecies} from "../../hooks/useSpecies";
-import {SpeciesTable} from "../../features/Species/SpeciesTable";
+import {usePatients} from "../../hooks/usePatients";
+import {PatientTable} from "../../features/Patient/PatientTable";
 
-const SpeciesPage = () => {
-    const { data, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
+const PatientPage = () => {
+    const { data, pagination, retry, searchTerm, setSearchTerm } = usePatients();
 
     return (
-        <SpeciesTable
+        <PatientTable
             data={data}
             totalCount={pagination.totalElements}
             page={pagination.params.page}
@@ -22,4 +22,4 @@ const SpeciesPage = () => {
     );
 };
 
-export default SpeciesPage;
+export default PatientPage;

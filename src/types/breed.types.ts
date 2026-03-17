@@ -1,9 +1,9 @@
-import {Species} from "./species.types";
+import {SpeciesDisplayDto} from "./species.types";
 
 export interface Breed {
     id: number;
     name: string;
-    species: Species;
+    species: SpeciesDisplayDto;
 }
 
 export interface BreedCreateDto {
@@ -19,4 +19,9 @@ export interface BreedUpdateDto {
 export interface BreedSearchDto {
     name?: string;
     speciesId?: number;
+}
+
+export interface BreedDisplayDto {
+    id: number;
+    name: string;
 }
