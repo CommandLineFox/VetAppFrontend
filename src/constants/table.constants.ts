@@ -71,7 +71,12 @@ export const VETERINARIAN_COLUMNS: Column<Veterinarian>[] = [
     { id: 'lastName', label: 'Last Name' },
     { id: 'licenseNumber', label: 'License No.' },
     { id: 'email', label: 'Work Email' },
-    { id: 'permissions', label: 'Access Level', align: 'center' }
+    {
+        id: 'permissions',
+        label: 'Access Level',
+        align: 'center',
+        render: (v) => v.permissions && v.permissions.length > 0 ? `${v.permissions.length} Permissions` : 'No Access'
+    }
 ];
 
 export const BREED_COLUMNS: Column<Breed>[] = [

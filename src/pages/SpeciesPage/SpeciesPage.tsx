@@ -2,7 +2,7 @@ import {useSpecies} from "../../hooks/useSpecies";
 import {SpeciesTable} from "../../features/Species/SpeciesTable";
 
 const SpeciesPage = () => {
-    const { data, loading, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
+    const { data, pagination, retry, searchTerm, setSearchTerm } = useSpecies();
 
     return (
         <SpeciesTable

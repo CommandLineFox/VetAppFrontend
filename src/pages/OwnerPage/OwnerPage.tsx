@@ -1,11 +1,11 @@
-import {useBreeds} from "../../hooks/useBreeds";
-import {BreedTable} from "../../features/Breed/BreedTable";
+import {useOwners} from "../../hooks/useOwners";
+import {OwnerTable} from "../../features/Owner/OwnerTable";
 
-const BreedPage = () => {
-    const { data, pagination, retry, searchTerm, setSearchTerm } = useBreeds();
+const OwnerPage = () => {
+    const { data, pagination, retry, searchTerm, setSearchTerm } = useOwners();
 
     return (
-        <BreedTable
+        <OwnerTable
             data={data}
             totalCount={pagination.totalElements}
             page={pagination.params.page}
@@ -22,4 +22,4 @@ const BreedPage = () => {
     );
 };
 
-export default BreedPage;
+export default OwnerPage;

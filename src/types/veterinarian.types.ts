@@ -4,7 +4,7 @@ export interface Veterinarian {
     lastName: string;
     licenseNumber: number;
     email: string;
-    permissions: number;
+    permissions: string[];
 }
 
 export interface VeterinarianCreateDto {
@@ -13,7 +13,7 @@ export interface VeterinarianCreateDto {
     licenseNumber: number;
     email: string;
     password: string;
-    permissions: number;
+    permissions: string[];
 }
 
 export interface VeterinarianUpdateDto {
@@ -22,7 +22,7 @@ export interface VeterinarianUpdateDto {
     licenseNumber?: number;
     email?: string;
     password?: string;
-    permissions?: number;
+    permissions?: string[];
 }
 
 export interface VeterinarianSearchDto {

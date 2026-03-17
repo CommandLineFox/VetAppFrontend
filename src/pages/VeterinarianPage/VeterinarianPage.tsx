@@ -1,11 +1,11 @@
-import {useBreeds} from "../../hooks/useBreeds";
-import {BreedTable} from "../../features/Breed/BreedTable";
+import {useVeterinarians} from "../../hooks/useVeterinarians";
+import {VeterinarianTable} from "../../features/Veterinarian/VeterinarianTable";
 
-const BreedPage = () => {
-    const { data, pagination, retry, searchTerm, setSearchTerm } = useBreeds();
+const VeterinarianPage = () => {
+    const { data, pagination, retry, searchTerm, setSearchTerm } = useVeterinarians();
 
     return (
-        <BreedTable
+        <VeterinarianTable
             data={data}
             totalCount={pagination.totalElements}
             page={pagination.params.page}
@@ -22,4 +22,4 @@ const BreedPage = () => {
     );
 };
 
-export default BreedPage;
+export default VeterinarianPage;
