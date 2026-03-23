@@ -6,10 +6,15 @@ import {Appointment} from "../types/appointment.types";
 import {Breed} from "../types/breed.types";
 import {Examination} from "../types/examination.types";
 import {Owner} from "../types/owner.types";
+import {formatDate, formatDateTime} from "../utils/date.utils.ts";
 
 export const PATIENT_COLUMNS: Column<Patient>[] = [
     { id: 'name', label: 'Pet Name' },
-    { id: 'birthDate', label: 'Date of Birth' },
+    {
+        id: 'birthDate',
+        label: 'Date of Birth',
+        render: (p) => formatDate(p.birthDate)
+    },
     { id: 'gender', label: 'Gender' },
     { id: 'passportNumber', label: 'Passport No.' },
     { id: 'microchipNumber', label: 'Microchip No.' },
@@ -36,7 +41,11 @@ export const OWNER_COLUMNS: Column<Owner>[] = [
 ];
 
 export const APPOINTMENT_COLUMNS: Column<Appointment>[] = [
-    { id: 'date', label: 'Date & Time' },
+    {
+        id: 'date',
+        label: 'Date & Time',
+        render: (a) => formatDateTime(a.date)
+    },
     { id: 'description', label: 'Reason/Description' },
     {
         id: 'patient',
@@ -51,7 +60,11 @@ export const APPOINTMENT_COLUMNS: Column<Appointment>[] = [
 ];
 
 export const EXAMINATION_COLUMNS: Column<Examination>[] = [
-    { id: 'date', label: 'Examination Date' },
+    {
+        id: 'date',
+        label: 'Examination Date',
+        render: (e) => formatDateTime(e.date)
+    },
     { id: 'diagnosis', label: 'Diagnosis' },
     {
         id: 'patient',
