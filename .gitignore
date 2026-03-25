@@ -33,3 +33,6 @@ yarn-error.log*
 # IDE
 .idea/
 .vscode/
+
+# E2E
+cypress/screenshots

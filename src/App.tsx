@@ -5,7 +5,6 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import {Permission} from "./constants/permissions.constants";
 import {AuthProvider} from "./context/AuthContext";
 import {MainLayout} from "./layouts/MainLayout";
-import AppointmentPage from "./pages/AppointmentPage/AppointmentPage.tsx";
 import BreedPage from "./pages/BreedPage/BreedPage.tsx";
 import ExaminationPage from "./pages/ExaminationPage/ExaminationPage.tsx";
 import HomePage from "./pages/HomePage/HomePage";
@@ -35,7 +34,6 @@ const App = () => {
                             <Route element={<ProtectedRoute><MainLayout/></ProtectedRoute>}>
                                 <Route path="/" element={<HomePage/>}/>
 
-                                <Route path="/appointments" element={<ProtectedRoute requiredPermission={Permission.APPOINTMENT_LIST}> <AppointmentPage/> </ProtectedRoute>}/>
                                 <Route path="/breeds" element={<ProtectedRoute requiredPermission={Permission.BREED_LIST}> <BreedPage/> </ProtectedRoute>}/>
                                 <Route path="/examinations" element={<ProtectedRoute requiredPermission={Permission.EXAMINATION_LIST}> <ExaminationPage/> </ProtectedRoute>}/>
                                 <Route path="/owners" element={<ProtectedRoute requiredPermission={Permission.OWNER_LIST}> <OwnerPage/> </ProtectedRoute>}/>

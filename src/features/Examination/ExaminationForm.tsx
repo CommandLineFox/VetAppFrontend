@@ -91,7 +91,13 @@ export const ExaminationForm = ({ initialData, onSuccess, onCancel }: Examinatio
         formData.diagnosis && formData.treatment && formData.patientId && formData.veterinarianId;
 
     return (
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}
+            data-cy="examination-form"
+        >
             {error && <Alert severity="error">{error}</Alert>}
 
             <Input
@@ -103,6 +109,7 @@ export const ExaminationForm = ({ initialData, onSuccess, onCancel }: Examinatio
                 fullWidth
                 required
                 InputLabelProps={{ shrink: true }}
+                data-cy="examination-date-input"
             />
 
             <Input
@@ -114,9 +121,12 @@ export const ExaminationForm = ({ initialData, onSuccess, onCancel }: Examinatio
                 fullWidth
                 required
                 disabled={loadingPatients}
+                data-cy="examination-patient-select"
             >
                 {patientOptions.map((p) => (
-                    <MenuItem key={p.id} value={p.id}>{p.name}</MenuItem>
+                    <MenuItem key={p.id} value={p.id} data-cy={`patient-option-${p.id}`}>
+                        {p.name}
+                    </MenuItem>
                 ))}
             </Input>
 
@@ -129,23 +139,104 @@ export const ExaminationForm = ({ initialData, onSuccess, onCancel }: Examinatio
                 fullWidth
                 required
                 disabled={loadingVets}
+                data-cy="examination-veterinarian-select"
             >
                 {veterinarianOptions.map((v) => (
-                    <MenuItem key={v.id} value={v.id}>Dr. {v.lastName}</MenuItem>
+                    <MenuItem key={v.id} value={v.id} data-cy={`veterinarian-option-${v.id}`}>
+                        Dr. {v.lastName}
+                    </MenuItem>
                 ))}
             </Input>
 
-            <Input label="Anamnesis" name="anamnesis" value={formData.anamnesis} onChange={handleChange} fullWidth required multiline rows={2}/>
-            <Input label="Clinical Presentation" name="clinicalPresentation" value={formData.clinicalPresentation} onChange={handleChange} fullWidth required multiline rows={2}/>
-            <Input label="Diagnosis" name="diagnosis" value={formData.diagnosis} onChange={handleChange} fullWidth required multiline rows={2}/>
-            <Input label="Treatment" name="treatment" value={formData.treatment} onChange={handleChange} fullWidth required multiline rows={2}/>
-            <Input label="Laboratory Analysis" name="laboratoryAnalysis" value={formData.laboratoryAnalysis} onChange={handleChange} fullWidth multiline rows={2}/>
-            <Input label="Specialist Examination" name="specialistExamination" value={formData.specialistExamination} onChange={handleChange} fullWidth multiline rows={2}/>
-            <Input label="Remarks" name="remarks" value={formData.remarks} onChange={handleChange} fullWidth multiline rows={2}/>
+            <Input
+                label="Anamnesis"
+                name="anamnesis"
+                value={formData.anamnesis}
+                onChange={handleChange}
+                fullWidth
+                required
+                multiline
+                rows={2}
+                data-cy="examination-anamnesis-input"
+            />
+            <Input
+                label="Clinical Presentation"
+                name="clinicalPresentation"
+                value={formData.clinicalPresentation}
+                onChange={handleChange}
+                fullWidth
+                required
+                multiline
+                rows={2}
+                data-cy="examination-presentation-input"
+            />
+            <Input
+                label="Diagnosis"
+                name="diagnosis"
+                value={formData.diagnosis}
+                onChange={handleChange}
+                fullWidth
+                required
+                multiline
+                rows={2}
+                data-cy="examination-diagnosis-input"
+            />
+            <Input
+                label="Treatment"
+                name="treatment"
+                value={formData.treatment}
+                onChange={handleChange}
+                fullWidth
+                required
+                multiline
+                rows={2}
+                data-cy="examination-treatment-input"
+            />
+            <Input
+                label="Laboratory Analysis"
+                name="laboratoryAnalysis"
+                value={formData.laboratoryAnalysis}
+                onChange={handleChange}
+                fullWidth
+                multiline
+                rows={2}
+                data-cy="examination-lab-input"
+            />
+            <Input
+                label="Specialist Examination"
+                name="specialistExamination"
+                value={formData.specialistExamination}
+                onChange={handleChange}
+                fullWidth
+                multiline
+                rows={2}
+                data-cy="examination-specialist-input"
+            />
+            <Input
+                label="Remarks"
+                name="remarks"
+                value={formData.remarks}
+                onChange={handleChange}
+                fullWidth
+                multiline
+                rows={2}
+                data-cy="examination-remarks-input"
+            />
 
             <Box sx={{ display: 'flex', gap: 2, mt: 1, justifyContent: 'flex-end' }}>
-                <Button onClick={onCancel} disabled={loading}>Cancel</Button>
-                <Button primary type="submit" disabled={loading || !isFormValid}>
+                <Button
+                    onClick={onCancel}
+                    disabled={loading}
+                    data-cy="examination-form-cancel"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    primary
+                    type="submit"
+                    disabled={loading || !isFormValid}
+                    data-cy="examination-form-submit"
+                >
                     {loading ? 'Saving...' : 'Save Record'}
                 </Button>
             </Box>

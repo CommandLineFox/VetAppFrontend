@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {Box, Alert, MenuItem} from '@mui/material';
-import {Input} from '../../components/Input/Input';
-import {Button} from '../../components/Button/Button';
-import {useBreedOptions} from "../../hooks/useBreedOptions.ts";
-import {patientService} from '../../services/patient.service';
-import {Breed} from "../../types/breed.types.ts";
-import {Owner} from "../../types/owner.types.ts";
-import {Patient, PatientCreateDto, PatientUpdateDto} from '../../types/patient.types';
-import {useOwnerOptions} from '../../hooks/useOwnerOptions';
+import React, { useState, useEffect } from 'react';
+import { Box, Alert, MenuItem } from '@mui/material';
+import { Input } from '../../components/Input/Input';
+import { Button } from '../../components/Button/Button';
+import { useBreedOptions } from "../../hooks/useBreedOptions.ts";
+import { patientService } from '../../services/patient.service';
+import { Breed } from "../../types/breed.types.ts";
+import { Owner } from "../../types/owner.types.ts";
+import { Patient, PatientCreateDto, PatientUpdateDto } from '../../types/patient.types';
+import { useOwnerOptions } from '../../hooks/useOwnerOptions';
 
 interface PatientFormProps {
     initialData: Patient | null;
@@ -41,7 +41,7 @@ export const PatientForm = ({ initialData, onSuccess, onCancel }: PatientFormPro
                 gender: initialData.gender,
                 passportNumber: initialData.passportNumber || '',
                 microchipNumber: initialData.microchipNumber || '',
-                cartonNumber: initialData.cartonNumber.toString() || '',
+                cartonNumber: initialData.cartonNumber?.toString() || '',
                 ownerId: initialData.owner.id,
                 breedId: initialData.breed.id
             });
@@ -61,7 +61,7 @@ export const PatientForm = ({ initialData, onSuccess, onCancel }: PatientFormPro
         try {
             const payload = {
                 name: formData.name.trim(),
-                birthDate: formData.birthDate,
+                birthDate: formData.birthDate || undefined,
                 gender: formData.gender,
                 passportNumber: formData.passportNumber.trim() || undefined,
                 microchipNumber: formData.microchipNumber.trim() || undefined,
@@ -86,10 +86,24 @@ export const PatientForm = ({ initialData, onSuccess, onCancel }: PatientFormPro
     const isFormValid = formData.name && formData.ownerId && formData.breedId;
 
     return (
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            data-cy="patient-form"
+        >
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-            <Input label="Pet Name" name="name" value={formData.name} onChange={handleChange} fullWidth required sx={{ mb: 2 }}/>
+            <Input
+                label="Pet Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="patient-name-input"
+            />
 
             <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
                 <Input
@@ -101,9 +115,14 @@ export const PatientForm = ({ initialData, onSuccess, onCancel }: PatientFormPro
                     fullWidth
                     required
                     disabled={loadingOwners}
+                    data-cy="patient-owner-select"
                 >
                     {ownerOptions.map((owner: Owner) => (
-                        <MenuItem key={owner.id} value={owner.id}>
+                        <MenuItem
+                            key={owner.id}
+                            value={owner.id}
+                            data-cy={`owner-option-${owner.id}`}
+                        >
                             {owner.firstName} {owner.lastName} ({owner.jmbg})
                         </MenuItem>
                     ))}
@@ -118,9 +137,14 @@ export const PatientForm = ({ initialData, onSuccess, onCancel }: PatientFormPro
                     fullWidth
                     required
                     disabled={loadingBreeds}
+                    data-cy="patient-breed-select"
                 >
                     {breedOptions.map((breed: Breed) => (
-                        <MenuItem key={breed.id} value={breed.id}>
+                        <MenuItem
+                            key={breed.id}
+                            value={breed.id}
+                            data-cy={`breed-option-${breed.id}`}
+                        >
                             {breed.name} ({breed.species.name})
                         </MenuItem>
                     ))}
@@ -128,23 +152,73 @@ export const PatientForm = ({ initialData, onSuccess, onCancel }: PatientFormPro
             </Box>
 
             <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <Input label="Birth Date" name="birthDate" type="date" value={formData.birthDate} onChange={handleChange} fullWidth InputLabelProps={{ shrink: true }}/>
-                <Input select label="Gender" name="gender" value={formData.gender} onChange={handleChange} fullWidth>
-                    <MenuItem value="MALE">Male</MenuItem>
-                    <MenuItem value="FEMALE">Female</MenuItem>
+                <Input
+                    label="Birth Date"
+                    name="birthDate"
+                    type="date"
+                    value={formData.birthDate}
+                    onChange={handleChange}
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    data-cy="patient-birthdate-input"
+                />
+                <Input
+                    select
+                    label="Gender"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    fullWidth
+                    data-cy="patient-gender-select"
+                >
+                    <MenuItem value="M" data-cy="gender-option-male">Male</MenuItem>
+                    <MenuItem value="F" data-cy="gender-option-female">Female</MenuItem>
                 </Input>
             </Box>
 
-            <Input label="Carton Number" name="cartonNumber" value={formData.cartonNumber} onChange={handleChange} fullWidth sx={{ mb: 2 }}/>
+            <Input
+                label="Carton Number"
+                name="cartonNumber"
+                value={formData.cartonNumber}
+                onChange={handleChange}
+                fullWidth
+                sx={{ mb: 2 }}
+                data-cy="patient-carton-input"
+            />
 
             <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                <Input label="Passport No." name="passportNumber" value={formData.passportNumber} onChange={handleChange} fullWidth/>
-                <Input label="Microchip No." name="microchipNumber" value={formData.microchipNumber} onChange={handleChange} fullWidth/>
+                <Input
+                    label="Passport No."
+                    name="passportNumber"
+                    value={formData.passportNumber}
+                    onChange={handleChange}
+                    fullWidth
+                    data-cy="patient-passport-input"
+                />
+                <Input
+                    label="Microchip No."
+                    name="microchipNumber"
+                    value={formData.microchipNumber}
+                    onChange={handleChange}
+                    fullWidth
+                    data-cy="patient-microchip-input"
+                />
             </Box>
 
             <Box sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'flex-end' }}>
-                <Button onClick={onCancel} disabled={loading}>Cancel</Button>
-                <Button primary type="submit" disabled={loading || !isFormValid}>
+                <Button
+                    onClick={onCancel}
+                    disabled={loading}
+                    data-cy="patient-form-cancel"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    primary
+                    type="submit"
+                    disabled={loading || !isFormValid}
+                    data-cy="patient-form-submit"
+                >
                     {loading ? 'Saving...' : 'Save'}
                 </Button>
             </Box>

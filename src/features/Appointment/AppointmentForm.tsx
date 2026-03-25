@@ -72,7 +72,12 @@ export const AppointmentForm = ({ initialData, onSuccess, onCancel }: Appointmen
     const isFormValid = formData.date && formData.patientId && formData.veterinarianId;
 
     return (
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            data-cy="appointment-form"
+        >
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
             <Input
@@ -85,6 +90,7 @@ export const AppointmentForm = ({ initialData, onSuccess, onCancel }: Appointmen
                 required
                 InputLabelProps={{ shrink: true }}
                 sx={{ mb: 2 }}
+                data-cy="appointment-date-input"
             />
 
             <Input
@@ -97,9 +103,14 @@ export const AppointmentForm = ({ initialData, onSuccess, onCancel }: Appointmen
                 required
                 disabled={loadingPatients}
                 sx={{ mb: 2 }}
+                data-cy="appointment-patient-select"
             >
                 {patientOptions.map((p) => (
-                    <MenuItem key={p.id} value={p.id}>
+                    <MenuItem
+                        key={p.id}
+                        value={p.id}
+                        data-cy={`patient-option-${p.id}`}
+                    >
                         {p.name} (Owner: {p.owner.lastName})
                     </MenuItem>
                 ))}
@@ -115,9 +126,14 @@ export const AppointmentForm = ({ initialData, onSuccess, onCancel }: Appointmen
                 required
                 disabled={loadingVets}
                 sx={{ mb: 2 }}
+                data-cy="appointment-veterinarian-select"
             >
                 {veterinarianOptions.map((v) => (
-                    <MenuItem key={v.id} value={v.id}>
+                    <MenuItem
+                        key={v.id}
+                        value={v.id}
+                        data-cy={`veterinarian-option-${v.id}`}
+                    >
                         Dr. {v.firstName} {v.lastName}
                     </MenuItem>
                 ))}
@@ -132,11 +148,23 @@ export const AppointmentForm = ({ initialData, onSuccess, onCancel }: Appointmen
                 multiline
                 rows={3}
                 sx={{ mb: 2 }}
+                data-cy="appointment-description-input"
             />
 
             <Box sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'flex-end' }}>
-                <Button onClick={onCancel} disabled={loading}>Cancel</Button>
-                <Button primary type="submit" disabled={loading || !isFormValid}>
+                <Button
+                    onClick={onCancel}
+                    disabled={loading}
+                    data-cy="appointment-form-cancel"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    primary
+                    type="submit"
+                    disabled={loading || !isFormValid}
+                    data-cy="appointment-form-submit"
+                >
                     {loading ? 'Saving...' : 'Save'}
                 </Button>
             </Box>
