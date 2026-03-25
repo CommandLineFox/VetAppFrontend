@@ -89,7 +89,7 @@ export const GenericTable = <T extends { id?: string | number }>({
                     {onSearchChange && (
                         <TextField
                             size="small"
-                            label="Pretraga"
+                            label="Search"
                             value={searchTerm}
                             onChange={(e) => onSearchChange(e.target.value)}
                             inputProps={{ 'data-cy': 'table-search-input' }}

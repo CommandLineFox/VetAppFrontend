@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {Box, Alert, MenuItem} from '@mui/material';
-import {Input} from '../../components/Input/Input';
-import {Button} from '../../components/Button/Button';
-import {breedService} from '../../services/breed.service';
-import {Breed} from '../../types/breed.types';
-import {useSpeciesOptions} from '../../hooks/useSpeciesOptions';
+import React, { useState, useEffect } from 'react';
+import { Box, Alert, MenuItem } from '@mui/material';
+import { Input } from '../../components/Input/Input';
+import { Button } from '../../components/Button/Button';
+import { breedService } from '../../services/breed.service';
+import { Breed } from '../../types/breed.types';
+import { useSpeciesOptions } from '../../hooks/useSpeciesOptions';
 
 interface BreedFormProps {
     initialData: Breed | null;
@@ -24,18 +24,27 @@ export const BreedForm = ({ initialData, onSuccess, onCancel }: BreedFormProps) 
         if (initialData) {
             setName(initialData.name);
             setSpeciesId(initialData.species?.id || '');
+        } else {
+            setName('');
+            setSpeciesId('');
         }
     }, [initialData]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name.trim() || !speciesId) return;
+
+        const trimmedName = name.trim();
+        if (!trimmedName || !speciesId) return;
 
         setLoading(true);
         setError(null);
 
         try {
-            const payload = { name: name.trim(), speciesId: Number(speciesId) };
+            const payload = {
+                name: trimmedName,
+                speciesId: Number(speciesId)
+            };
+
             if (initialData?.id) {
                 await breedService.update(initialData.id, payload);
             } else {
@@ -43,14 +52,19 @@ export const BreedForm = ({ initialData, onSuccess, onCancel }: BreedFormProps) 
             }
             onSuccess();
         } catch (err: any) {
-            setError(err.response?.data?.message || "Error saving breed.");
+            setError(err.response?.data?.message || "There was an error saving the breed.");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            data-cy="breed-form"
+        >
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
             <Input
@@ -62,9 +76,17 @@ export const BreedForm = ({ initialData, onSuccess, onCancel }: BreedFormProps) 
                 fullWidth
                 required
                 sx={{ mb: 2 }}
+                data-cy="breed-species-select"
+                SelectProps={{
+                    SelectDisplayProps: { 'data-cy': 'breed-species-select-input' } as any
+                }}
             >
                 {speciesOptions.map((species) => (
-                    <MenuItem key={species.id} value={species.id}>
+                    <MenuItem
+                        key={species.id}
+                        value={species.id}
+                        data-cy={`species-option-${species.id}`}
+                    >
                         {species.name}
                     </MenuItem>
                 ))}
@@ -75,14 +97,26 @@ export const BreedForm = ({ initialData, onSuccess, onCancel }: BreedFormProps) 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 disabled={loading}
+                data-cy="breed-name-input"
                 fullWidth
                 required
             />
 
             <Box sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'flex-end' }}>
-                <Button onClick={onCancel} disabled={loading}>Cancel</Button>
-                <Button primary type="submit" disabled={loading || !name.trim() || !speciesId}>
-                    {loading ? 'Sending...' : 'Save'}
+                <Button
+                    onClick={onCancel}
+                    disabled={loading}
+                    data-cy="breed-form-cancel"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    primary
+                    type="submit"
+                    disabled={loading || !name.trim() || !speciesId}
+                    data-cy="breed-form-submit"
+                >
+                    {loading ? 'Sending...' : initialData ? 'Save changes' : 'Save breed'}
                 </Button>
             </Box>
         </Box>

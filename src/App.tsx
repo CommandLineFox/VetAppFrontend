@@ -5,7 +5,6 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import {Permission} from "./constants/permissions.constants";
 import {AuthProvider} from "./context/AuthContext";
 import {MainLayout} from "./layouts/MainLayout";
-import AppointmentPage from "./pages/AppointmentPage/AppointmentPage.tsx";
 import BreedPage from "./pages/BreedPage/BreedPage.tsx";
 import ExaminationPage from "./pages/ExaminationPage/ExaminationPage.tsx";
 import HomePage from "./pages/HomePage/HomePage";

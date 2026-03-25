@@ -65,19 +65,87 @@ export const OwnerForm = ({ initialData, onSuccess, onCancel }: OwnerFormProps) 
     const isFormValid = formData.firstName && formData.lastName && formData.jmbg;
 
     return (
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            data-cy="owner-form"
+        >
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-            <Input label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} fullWidth required sx={{ mb: 2 }} />
-            <Input label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} fullWidth required sx={{ mb: 2 }} />
-            <Input label="JMBG" name="jmbg" value={formData.jmbg} onChange={handleChange} fullWidth required sx={{ mb: 2 }} />
-            <Input label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} fullWidth sx={{ mb: 2 }} />
-            <Input label="Email" name="email" type="email" value={formData.email} onChange={handleChange} fullWidth sx={{ mb: 2 }} />
-            <Input label="Address" name="address" value={formData.address} onChange={handleChange} fullWidth sx={{ mb: 2 }} />
+            <Input
+                label="First Name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="owner-first-name-input"
+            />
+            <Input
+                label="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="owner-last-name-input"
+            />
+            <Input
+                label="JMBG"
+                name="jmbg"
+                value={formData.jmbg}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="owner-jmbg-input"
+            />
+            <Input
+                label="Phone Number"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                fullWidth
+                sx={{ mb: 2 }}
+                data-cy="owner-phone-input"
+            />
+            <Input
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                fullWidth
+                sx={{ mb: 2 }}
+                data-cy="owner-email-input"
+            />
+            <Input
+                label="Address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                fullWidth
+                sx={{ mb: 2 }}
+                data-cy="owner-address-input"
+            />
 
             <Box sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'flex-end' }}>
-                <Button onClick={onCancel} disabled={loading}>Cancel</Button>
-                <Button primary type="submit" disabled={loading || !isFormValid}>
+                <Button
+                    onClick={onCancel}
+                    disabled={loading}
+                    data-cy="owner-form-cancel"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    primary
+                    type="submit"
+                    disabled={loading || !isFormValid}
+                    data-cy="owner-form-submit"
+                >
                     {loading ? 'Saving...' : 'Save'}
                 </Button>
             </Box>

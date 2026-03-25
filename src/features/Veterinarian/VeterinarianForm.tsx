@@ -85,13 +85,56 @@ export const VeterinarianForm = ({ initialData, onSuccess, onCancel }: Veterinar
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            data-cy="veterinarian-form"
+        >
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-            <Input label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} fullWidth required sx={{ mb: 2 }}/>
-            <Input label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} fullWidth required sx={{ mb: 2 }}/>
-            <Input label="License Number" name="licenseNumber" type="number" value={formData.licenseNumber} onChange={handleChange} fullWidth required sx={{ mb: 2 }}/>
-            <Input label="Email" name="email" type="email" value={formData.email} onChange={handleChange} fullWidth required sx={{ mb: 2 }}/>
+            <Input
+                label="First Name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="vet-first-name-input"
+            />
+            <Input
+                label="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="vet-last-name-input"
+            />
+            <Input
+                label="License Number"
+                name="licenseNumber"
+                type="number"
+                value={formData.licenseNumber}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="vet-license-input"
+            />
+            <Input
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                fullWidth
+                required
+                sx={{ mb: 2 }}
+                data-cy="vet-email-input"
+            />
 
             <Input
                 label={initialData ? "New Password (optional)" : "Password"}
@@ -102,6 +145,7 @@ export const VeterinarianForm = ({ initialData, onSuccess, onCancel }: Veterinar
                 fullWidth
                 required={!initialData}
                 sx={{ mb: 2 }}
+                data-cy="vet-password-input"
             />
 
             <FormControl fullWidth sx={{ mb: 2 }}>
@@ -111,9 +155,14 @@ export const VeterinarianForm = ({ initialData, onSuccess, onCancel }: Veterinar
                     value={selectedPermissions}
                     onChange={handlePermissionChange}
                     renderValue={(selected) => (selected as string[]).join(', ')}
+                    data-cy="vet-permissions-select"
                 >
                     {allPermissions.map((perm) => (
-                        <MenuItem key={perm} value={perm}>
+                        <MenuItem
+                            key={perm}
+                            value={perm}
+                            data-cy={`permission-option-${perm}`}
+                        >
                             <Checkbox checked={selectedPermissions.indexOf(perm) > -1}/>
                             <ListItemText primary={perm}/>
                         </MenuItem>
@@ -122,8 +171,19 @@ export const VeterinarianForm = ({ initialData, onSuccess, onCancel }: Veterinar
             </FormControl>
 
             <Box sx={{ display: 'flex', gap: 2, mt: 3, justifyContent: 'flex-end' }}>
-                <Button onClick={onCancel} disabled={loading}>Cancel</Button>
-                <Button primary type="submit" disabled={loading}>
+                <Button
+                    onClick={onCancel}
+                    disabled={loading}
+                    data-cy="vet-form-cancel"
+                >
+                    Cancel
+                </Button>
+                <Button
+                    primary
+                    type="submit"
+                    disabled={loading}
+                    data-cy="vet-form-submit"
+                >
                     {loading ? 'Saving...' : 'Save'}
                 </Button>
             </Box>
