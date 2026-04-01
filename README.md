@@ -105,13 +105,13 @@ Running Tests
 To run tests in headless mode:
 
    ```bash
-   npm run cypress:run
+   npx cypress run
    ```
 
 To open the interactive Cypress Test Runner:
 
    ```bash
-   npm run cypress:open
+   npx cypress open
    ```
 
 ## System Architecture
