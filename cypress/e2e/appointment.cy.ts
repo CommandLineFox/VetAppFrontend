@@ -61,7 +61,13 @@ describe('Appointment Management - Dashboard', () => {
     });
 
     it('should filter appointments using the calendar', () => {
-        cy.get('.MuiPickersDay-root').not('.Mui-selected').first().click();
+        cy.get('.MuiPickersDay-root')
+            .not('.Mui-selected')
+            .not('.MuiPickersDay-hiddenDaySpacingFiller')
+            .not('.MuiPickersDay-dayOutsideMonth')
+            .filter(':visible')
+            .first()
+            .click();
         cy.get('table').should('be.visible');
     });
 
