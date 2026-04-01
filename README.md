@@ -43,7 +43,7 @@ API.
 
 * Node.js (v18 or higher)
 * NPM (v9 or higher)
-* Running VetAppBackend instance
+* Running VetAppBackend instance and database
 
 ### Configuration
 
