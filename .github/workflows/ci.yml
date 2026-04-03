@@ -73,7 +73,7 @@ jobs:
 
       - name: Decrypt Frontend Secrets
         run: |
-          cd backend
+          cd frontend
           sops --decrypt --output-type dotenv secrets.enc.yaml > .env
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
