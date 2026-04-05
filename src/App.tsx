@@ -33,7 +33,6 @@ const App = () => {
 
                             <Route element={<ProtectedRoute><MainLayout/></ProtectedRoute>}>
                                 <Route path="/" element={<HomePage/>}/>
-
                                 <Route path="/breeds" element={<ProtectedRoute requiredPermission={Permission.BREED_LIST}> <BreedPage/> </ProtectedRoute>}/>
                                 <Route path="/examinations" element={<ProtectedRoute requiredPermission={Permission.EXAMINATION_LIST}> <ExaminationPage/> </ProtectedRoute>}/>
                                 <Route path="/owners" element={<ProtectedRoute requiredPermission={Permission.OWNER_LIST}> <OwnerPage/> </ProtectedRoute>}/>
